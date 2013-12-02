@@ -1,0 +1,33 @@
+# Mac specifics
+.DS_Store
+._*
+.spotlight-v100
+.Trashes
+Thumbs.db
+
+# node_modules
+node_modules/
+webapp/node_modules
+
+# OS generated files #
+.swp
+
+# bower refs
+webapp/components
+components/
+
+# and
+bower_components/
+webapp/bower_components/
+
+# Project files
+creds
+datasets
+project
+*.pem
+
+# distributions
+webapp/dist1
+webapp/dist2
+
+
