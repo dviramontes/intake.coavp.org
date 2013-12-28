@@ -35,27 +35,28 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
 // otherwise if successful .. make a Schema object
 var IntakeSchema = mongoose.Schema({
-		name : String
+		taker : String,
+		date : Date
 });
 
 // next compile the Schema object into a Model
 var Intake = mongoose.model("Intake", IntakeSchema);
 
 // lets test the Intake document model by creating one
-var Intake001 = new Intake({ name : "your new intake!"});
+var Intake001 = new Intake({ taker : "your new intake!"});
 console.log(Intake001.name) // logs "^^^^^^^^^^^^^^^"
 
 
 // lets define the Intake Model:
 db.on('open', function callback(){
-	
+
 	console.log('connection success'.blue);
 	// make Intake Model available to the rest of the app
 	module.exports.Intake = Intake;
 	// *
 	// all done here
-	// mongo will auto-generate an _id property 
-	// for each todo that we create 
+	// mongo will auto-generate an _id property
+	// for each todo that we create
 
 });
 
