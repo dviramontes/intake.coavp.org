@@ -12,7 +12,7 @@ files = [
     'app/scripts/*.js',
     'app/scripts/**/*.js',
     'test/mock/**/*.js',
-    'test/spec/controllers/**/*.js', // <-- excluding parernt dir and testing this with jasmine_node
+    'test/spec/controllers/*.js', // <-- excluding parernt dir and testing this with jasmine_node
 ];
 
 // list of files to exclude

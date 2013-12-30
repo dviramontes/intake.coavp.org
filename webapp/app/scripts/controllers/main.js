@@ -68,9 +68,9 @@ angular.module('webapp')
         }
 
         $scope.awesomeThings = [
-          'HTML5 Boilerplate',
-          'AngularJS',
-          'Karma'
+            'HTML5 Boilerplate',
+            'AngularJS',
+            'Karma'
         ];
 
     });

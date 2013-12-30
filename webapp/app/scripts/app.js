@@ -5,7 +5,7 @@ angular.module('webapp', [])
         $routeProvider
             .when('/', {
                 templateUrl : 'views/login.html',
-                controller : 'loginCtrl'
+                controller : 'LoginCtrl'
             })
             .when('/main', {
                 templateUrl: 'views/main.html',

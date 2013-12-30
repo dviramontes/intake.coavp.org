@@ -282,7 +282,11 @@ module.exports = function(grunt) {
                     '<%= yeoman.app %>/css/main.css': '<%= yeoman.app %>/less/main.less'
                 }
             }
-        }
+        },
+        jasmine_node: {
+            specNameMatcher : "_spec",
+            projectRoot : "./test/spec/databases"
+        },
 
     });
 
@@ -298,6 +302,7 @@ module.exports = function(grunt) {
             'open',
             'watch'
         ]);
+
     });
 
     grunt.registerTask('test', [
