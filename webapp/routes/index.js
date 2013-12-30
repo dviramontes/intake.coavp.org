@@ -12,7 +12,7 @@ module.exports = function(app) {
 
     var IntakeModel, Intake;
 
-    process.stdout.write("testing Model import :: ".rainbow)
+    process.stdout.write("__testing Model import__")
 
     var loadIntakeModel = function(){
         IntakeModel = Intake || require('../app.js').Intake;

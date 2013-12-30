@@ -5,14 +5,14 @@ basePath = '';
 
 // list of files / patterns to load in the browser
 files = [
-  JASMINE,
-  JASMINE_ADAPTER,
-  'app/bower_components/angular/angular.js',
-  'app/bower_components/angular-mocks/angular-mocks.js',
-  'app/scripts/*.js',
-  'app/scripts/**/*.js',
-  'test/mock/**/*.js',
-  'test/spec/**/*.js'
+    JASMINE,
+    JASMINE_ADAPTER,
+    'app/bower_components/angular/angular.js',
+    'app/bower_components/angular-mocks/angular-mocks.js',
+    'app/scripts/*.js',
+    'app/scripts/**/*.js',
+    'test/mock/**/*.js',
+    'test/spec/controllers/**/*.js', // <-- excluding parernt dir and testing this with jasmine_node
 ];
 
 // list of files to exclude
@@ -36,7 +36,7 @@ colors = true;
 logLevel = LOG_INFO;
 
 // enable / disable watching file and executing tests whenever any file changes
-autoWatch = false;
+autoWatch = true;
 
 // Start these browsers, currently available:
 // - Chrome

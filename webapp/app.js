@@ -27,17 +27,18 @@ require('./routes')(app);
 
 
 // db connection
-mongoose.connect('mongodb://localhost/testdb');
+mongoose.connect('mongodb://localhost/localMongoDB');
 
 // and connection sucesss or error ?
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
 // otherwise if successful .. make a Schema object
-var IntakeSchema = mongoose.Schema({
+var IntakeSchema = mongoose
+	.Schema({
 		taker : String,
 		date : Date
-});
+	});
 
 // next compile the Schema object into a Model
 var Intake = mongoose.model("Intake", IntakeSchema);
@@ -49,8 +50,7 @@ console.log(Intake001.name) // logs "^^^^^^^^^^^^^^^"
 
 // lets define the Intake Model:
 db.on('open', function callback(){
-
-	console.log('connection success'.blue);
+	console.log('connection success'.green);
 	// make Intake Model available to the rest of the app
 	module.exports.Intake = Intake;
 	// *
