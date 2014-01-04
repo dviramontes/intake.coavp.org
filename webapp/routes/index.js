@@ -1,4 +1,3 @@
-
 /*
     TODO:
     [x] - refactor loading the intakes model
@@ -8,33 +7,20 @@
     [x] - figure out * get route for single page app
 */
 
+// load intake model
+var Intake = require('../models/Intake').Intake;
+
 module.exports = function(app) {
 
-    var IntakeModel, Intake;
-
-    process.stdout.write("__testing Model import__")
-
-    var loadIntakeModel = function(){
-        IntakeModel = Intake || require('../app.js').Intake;
-    }
-
     app.get('/', function(req, res, next) {
-
-        loadIntakeModel(); // load intake model
-        // now if webapp is visited by user first
-
-        res.render('index', {
-            title: 'Express'
-        });
+        // res.render('index', {
+        //     title: 'Express'
+        // });
     });
 
     // api . get all todos
     app.get('/api/intakes', function(req, res, next) {
-
-        // lets load the Intake model now if not already loaded
-        Intake = IntakeModel || require('../app.js').Intake;
-
-        // lets find some shit..
+        // lets find some intakes..
         Intake.find(function(err, intakes) {
             if (err) res.send(err); // error ?
             res.json(intakes); // return all intakes in json
@@ -42,43 +28,39 @@ module.exports = function(app) {
     });
 
     // put new intake in db
-    app.post('/api/intakes', function(req, res){
-
-        Intake = IntakeModel || require('../app.js').Intake;
+    app.post('/api/intakes', function(req, res) {
 
         console.log(req.body.text);
 
         Intake.create({
-            name : req.body.text,
-            done : false
-        }, function(err, intake){
+            name: req.body.text,
+            done: false
+        }, function(err, intake) {
             // catch error in intake document creation
-            if(err) res.send(err);
+            if (err) res.send(err);
 
             // return a list of all intakes
             // after one has been created...
-            Intake.find(function(err, intakes){
-                if(err) res.send(err);
+            Intake.find(function(err, intakes) {
+                if (err) res.send(err);
                 res.json(intakes);
             });
         });
     });
 
     // delete from db
-    app.delete('/api/intakes/:intake_id', function(req, res){
-
-        Intake = IntakeModel || require('../app.js').Intake;
+    app.delete('/api/intakes/:intake_id', function(req, res) {
 
         Intake.remove({
-            _id : req.params.intake_id
-        }, function(err, intake){
+            _id: req.params.intake_id
+        }, function(err, intake) {
 
-            if(err) res.send(err);
+            if (err) res.send(err);
 
             // return a list of remaining intakes in
             // db
-            Intake.find(function(err, intakes){
-                if(err) res.send(err);
+            Intake.find(function(err, intakes) {
+                if (err) res.send(err);
                 res.json(intakes);
             })
         })

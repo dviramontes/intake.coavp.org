@@ -7,9 +7,9 @@ angular.module('webapp', [])
                 templateUrl : 'views/login.html',
                 controller : 'LoginCtrl'
             })
-            .when('/main', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
+            .when('/intakes', {
+                templateUrl: 'views/intakes.html',
+                controller: 'IntakeCtrl'
             })
             .otherwise({
                 redirectTo: '/'

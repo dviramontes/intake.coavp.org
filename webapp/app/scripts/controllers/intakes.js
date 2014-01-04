@@ -12,18 +12,17 @@
 **/
 
 angular.module('webapp')
-    .controller('MainCtrl', function($scope, $http) {
+    .controller('IntakeCtrl', function($scope, $http) {
 
         var init = function() {
             $("#datepicker").datepicker();
         }
 
-        $scope.Intake = {};
-        $scope.Intake.taker = "";
+        $scope.Intakes = {};
 
-        $scope.Intake.date = function() {
-            new Date();
-        }
+        // $scope.Intakes.date = function() {
+        //     // new Date();
+        // }
 
         // load the page with intakes
 
@@ -41,7 +40,7 @@ angular.module('webapp')
         // submit the add form, send the
         // text to the node API
         $scope.createIntake = function() {
-            $http.post('/api/intakes/', $scope.Intake)
+            $http.post('/api/intakes/', $scope.Intakes)
                 .success(function(data) {
                     // clear value of input
                     // field after submit

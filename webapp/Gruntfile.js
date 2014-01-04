@@ -1,6 +1,6 @@
 // Generated on 2013-07-11 using generator-angular 0.3.0
 'use strict';
-var LIVERELOAD_PORT = 35729;
+
 var path = require('path');
 
 // # Globbing
@@ -11,7 +11,7 @@ var path = require('path');
 
 module.exports = function(grunt) {
     // load all grunt tasks
-    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+    require('load-grunt-tasks')(grunt);
     // show elapsed time at the end
     require('time-grunt')(grunt);
 
@@ -23,9 +23,9 @@ module.exports = function(grunt) {
 
     try {
         yeomanConfig.app = require('./bower.json').appPath || yeomanConfig.app;
-    } catch (e) {}
-
-    grunt.loadNpmTasks('grunt-express');
+    } catch (e) {
+        throw Error(e);
+    }
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
             },
             livereload: {
                 options: {
-                    livereload: LIVERELOAD_PORT
+                    livereload: true,
                 },
                 files: [
                     '<%= yeoman.app %>/{,*/}*.html',
@@ -284,8 +284,8 @@ module.exports = function(grunt) {
             }
         },
         jasmine_node: {
-            specNameMatcher : "_spec",
-            projectRoot : "./test/spec/databases"
+            specNameMatcher: "_spec",
+            projectRoot: "./test/spec/databases"
         },
 
     });
@@ -299,7 +299,7 @@ module.exports = function(grunt) {
             'clean:server',
             'concurrent:server',
             'express:livereload',
-            'open',
+            // 'open',
             'watch'
         ]);
 
@@ -331,4 +331,5 @@ module.exports = function(grunt) {
         'test',
         'build'
     ]);
-};
+
+}
