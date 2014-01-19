@@ -35,8 +35,12 @@ module.exports = function(app) {
         console.dir(JSON.stringify(req.body));
 
         Intake.create({
-            taker: req.body.taker,
+            taker : {
+                taker : req.body.taker,
+                type :  req.body.type
+            },
             date: req.body.date,
+            
             done: false
         }, function(err, intake) {
             // catch error in intake document creation

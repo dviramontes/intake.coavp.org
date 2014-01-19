@@ -6,7 +6,10 @@ var Schema = mongoose.Schema,
 
 var Intake = new Schema({
     id: ObjectId,
-    taker: String,
+    taker: {
+    	taker : String,
+    	type : String
+    },
     date: {
         type: Date,
         // default: Date.now()
