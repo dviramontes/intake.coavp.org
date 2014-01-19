@@ -35,7 +35,10 @@ console.log('connection success'.green);
 db.on('open', function callback() {
     console.log("database opened".green);
     new Intake({
-        taker: "someone created from app.js as test",
+        taker: [{
+            name : "App.js as Test",
+            category : "x"
+        }],
         date: new Date(),
         hidden: Boolean
     }).save(function(err) {

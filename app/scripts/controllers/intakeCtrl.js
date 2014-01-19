@@ -11,9 +11,9 @@
             filling out intake.
 **/
 
-var init = function() {
-    $("#datepicker").datepicker();
-}
+// var init = function() {
+//     $("#datepicker").datepicker();
+// }
 
 angular.module('webapp')
     .controller('intakeCtrl', function($scope, $http) {
@@ -24,7 +24,7 @@ angular.module('webapp')
         $http.get('/api/intakes')
             .success(function(data) {
                 $scope.intakes = data;
-                init();
+                // init();
                 console.log(data);
             })
             .error(function(data) {

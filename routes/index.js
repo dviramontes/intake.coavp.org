@@ -36,8 +36,8 @@ module.exports = function(app) {
 
         Intake.create({
             taker : {
-                taker : req.body.taker,
-                type :  req.body.type
+                "name" : req.body.name,
+                "category"   : req.body.category
             },
             date: req.body.date,
             
