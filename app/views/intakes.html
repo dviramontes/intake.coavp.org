@@ -67,9 +67,9 @@
     <!-- begin debug -->
     <div class="col-md-6" ng-repeat="intake in intakes">
         <div class="checkbox">
-            <label>
-                <input type="checkbox" ng-click="deleteIntake( intake._id)" value="">{{ intake.name}}
-            </label>
+            <label for="intake.delete">{{ intake.taker[0].name }}</label>
+            <input type="checkbox" ng-click="deleteIntake( intake._id)" value="">
+
         </div>
         <!-- debug view -->
         <div>

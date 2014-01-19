@@ -32,13 +32,14 @@ module.exports = function(app) {
     app.post('/api/intakes', function(req, res) {
 
         console.log("name from view :-> ".red );
+        console.log("typeof req.body.category :-> ".red + typeof req.body.category );
         console.dir(JSON.stringify(req.body));
 
         Intake.create({
-            taker : {
+            taker : [{
                 "name" : req.body.name,
-                "category"   : req.body.category
-            },
+                "category" : req.body.category
+            }],
             date: req.body.date,
             
             done: false
