@@ -1,0 +1,28 @@
+# Mac specifics
+.DS_Store
+.Trashes
+Thumbs.db
+
+# Photoshop files
+app/**/*.psd
+
+# node_modules
+node_modules/
+
+# automatic screenshots
+casperjs/screenshots
+
+# bower refs
+bower_components/
+app/bower_components/
+
+# Project files
+secret/
+project/
+config/
+
+# distributions
+dest/
+prod/
+
+

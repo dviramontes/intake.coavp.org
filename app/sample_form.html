@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="description" content="simple form" />
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <script src="http://getbootstrap.com/dist/js/bootstrap.js"></script>
+    <meta charset=utf-8 />
+    <title>JS Bin</title>
+</head>
+
+<body>
+    <div class="form-container">
+
+        <!--   it all starts here with the form element -->
+        <form action="path/to/script" onreset="return confirm('Are you sure to clear form?');" method="get">
+            <fieldset>
+                <legend>The main info about you</legend>
+                <!-- the list of 10 input elements -->
+                <p>
+                    <label for="Person_name">Name:</label>
+                    <!--       type=text is the default -->
+                    <input type="text" id="Person_name">
+                </p>
+                <p>
+                    <label for="passwd">Pasword:</label>
+                    <!--       type=text is the default -->
+
+                    <input type="password" id="passwd">
+                </p>
+                <hr>
+                <p>
+                    <!--       input + label -->
+                    <input type="checkbox" id="checkbox1">
+                    <label for="checkbox1">Yes?</label>
+                    <br>
+                    <!--       input + label -->
+                    <input type="checkbox" id="checkbox2">
+                    <label for="checkbox2">Other?</label>
+                </p>
+                radiobox
+                <hr>
+                <p>
+                    <input type="radio" id="radio1" name="radioselect">
+                    <label for="radio1">1</label>
+                    <br>
+                    <input type="radio" id="radio2" name="radioselect">
+                    <label for="radio2">2</label>
+                    <br>
+                    <input type="radio" id="radio3" name="radioselect">
+                    <label for="radio3">3</label>
+                </p>
+                <hr>
+                <p>
+                    <label for="fileChooser">Choose file:</label>
+                    <!--       accept specifies the type of file accepted -->
+                    <input type="file" id="fileChooser" accept="image/jpeg">
+                </p>
+                <!--     
+       hidden input type, special not displayed, can be used for storing values. It can be sent -->
+                <input type="hidden" value="someValue">
+
+                <p>
+                    <!--       a button -->
+                    <input type="button" value="This is an input type button" onclick='alert("submitted");'>
+                </p>
+
+                <p>
+                    <!--   simple submit btn, very little customization, diff browsers, diff looks -->
+                    <input type="submit" value="send form">
+                </p>
+                <p>
+                    <!--  more customizeable btn via input type="image" -->
+                    <input type="image" src="http://www.whatsbubbling.net/webimgs/submitBtn.jpg">
+                    <br>
+                    <br>
+                    <!--       bootstrap btn -->
+                    <button type="submit" class="btn btn-default">Submit</button>
+                    <br>
+                </p>
+                <!--      reset form data -->
+                <p>
+                    <!--       deletes all data -->
+                    <input type="reset" value="clear form data">
+                    <br>
+                    <br>
+                    <button type="reset" class="btn btn-default">clear form data</button>
+                </p>
+            </fieldset>
+            <fieldset>
+
+                <legend>The text area</legend>
+                <!--     butons -->
+                <p>
+                    <!--       type is needed for i.e. -->
+                    <!--       more options than input btn -->
+                    <button type="submit">
+                        <em>Submit</em> <b>BTN</b>
+                    </button>
+                </p>
+                <hr>
+                <p>
+                    <!--       selection and option groups -->
+                    <label for="selectDemo">This is a select demo</label>
+                    <select name="selectDemo" id="selectDemo">
+                        <options>david</options>
+                        <optgroup label="fistname">
+                            <option value="1">judith</option>
+                            <option value="2">david</option>
+                            <option value="3">alberto</option>
+                        </optgroup>
+                        <optgroup label="lastnames">
+                            <option value="viramontes">viramontes</option>
+                            <option value="marquez">marquez</option>
+                        </optgroup>
+                    </select>
+                </p>
+                <p>
+                    <!--       text area -->
+                    <label for="textAream">Some text msg:</label>
+                    <textarea name="textArea" id="textAream" cols="40" rows="10"></textarea>
+                </p>
+            </fieldset>
+        </form>
+    </div>
+
+</body>
+
+</html>
