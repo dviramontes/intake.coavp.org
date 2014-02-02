@@ -17,14 +17,13 @@
 
 angular.module('webapp')
     .controller('intakeCtrl', function($scope, $http) {
-
+        // init();
         // load the page with intakes
         $scope.formData = {};
 
         $http.get('/api/intakes')
             .success(function(data) {
                 $scope.intakes = data;
-                // init();
                 console.log(data);
             })
             .error(function(data) {
@@ -54,7 +53,6 @@ angular.module('webapp')
                 .success(function(data) {
                     console.info("Deleted obj with id of : " + id + " from DB");
                     $scope.intakes = data;
-                    
                 })
                 .error(function(data) {
                     console.error("Error: " + data);
