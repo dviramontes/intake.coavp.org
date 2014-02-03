@@ -1,6 +1,6 @@
-//
-//  * restify.server.config
-//
+//	restify
+//  * 	--API--
+//	server config
 
 var restify = require('restify'),
     userSave = require('save')('user');
@@ -13,6 +13,8 @@ server
     .use(restify.fullResponse())
     .use(restify.bodyParser());
 
+
+//  curl -i http://0.0.0.0:9000/user |  json
 server.get('/user', function(req, res, next) {
 
     userSave.find({}, function(err, users) {
@@ -21,14 +23,19 @@ server.get('/user', function(req, res, next) {
 
 });
 
-server.post('/user', function(req, res, next) {
+// all users are deleted after server restart
 
-    console.log(req.params.name);
+server.post('/user', function(req, res, next) {
 
     if (req.params.name === undefined) {
         return next(new restify.InvalidArgumentError("Name must be supplied"));
     }
 
+    console.log(req.params.name);
+    // event handler for 'save' event
+    userSave.on('save', function() {
+        console.log("new user created!")
+    });
     userSave.create({
         name: req.params.name
     }, function(err, user) {
@@ -39,6 +46,8 @@ server.post('/user', function(req, res, next) {
     })
 
 })
+
+
 
 server.listen(9000, function() {
     console.log('%s Listening at %s', server.name, server.url);
