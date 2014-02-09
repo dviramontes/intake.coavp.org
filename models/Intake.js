@@ -4,6 +4,7 @@
 	[ ] -  refactor that requires a radio input selection
 	[ ] -  refactor Caller
 	[ ] -  refactor Taker /  User
+	[ ] - replace date with objectId TimeStamp ISO created time
 
 ====================================*/
 
@@ -13,29 +14,18 @@ var mongoose = require('mongoose'),
 
 
 var IntakeSchema = new Schema({
-	meta: {
-		// 1A
-		id: ObjectId,
-		// 1B
-		taker: {
-			name: {
-				first: String,
-				last: String
-			},
-			contributorType: String
-		},
-		// 2A
-		date: {
-			type: Date,
-			default: Date.now
-		},
-		// 3
-		caseNumber: Number,
-		hidden: {
-			type: Boolean,
-			default: false
-		}
-	},
+
+	// 1A, unique random incremented {basedOn : process id, time }
+	id: ObjectId,
+	// 1B
+	taker:String,
+	contributorType: String,
+	// 2A
+	// replace with objectId TimeStamp ISO created time
+	date: { type: Date, default: Date.now},
+	// 3
+	caseNumber: { type : Number, index: true },
+	hidden: { type: Boolean, default: false},
 	// 2B
 	callbackNeeded: Boolean,
 	// 4
@@ -70,6 +60,8 @@ var IntakeSchema = new Schema({
 	// 8
 	referedBy: String // radio input
 });
+
+// IntakeSchema({meta: })
 
 // next compile the Schema object into a Model
 // (registering a Model with Mongoose)

@@ -39,7 +39,10 @@ server
 
 //  GET plural
 //  curl -i http://0.0.0.0:9000/user |  json
-server.get('/intake', function (req, res) {
+server.get('/intakes', function (req, res) {
+	// run in robomongo shell or mongo shell
+	// to see how the query is ran
+	// db.intakes.find().explain();
 
 	// lets find some intakes..
 	Intake.find({}, function (err, foundIntakes) {
@@ -48,10 +51,13 @@ server.get('/intake', function (req, res) {
 		}
 		res.json(foundIntakes); // return all intakes in json
 	});
+
+
 });
 
 // GET single
 server.get('/intake/:id', function (req, res, next) {
+
 	Intake.findOne({
 		_id: req.params.id
 	}, function (err, intake) {
@@ -81,10 +87,7 @@ server.post('/intake', function (req, res, next) {
 	}, function (err, intake) {
 		if (err) {
 			return next(
-				new restify
-					.InvalidArgumentError(
-						JSON.stringify(err.errors)
-				)
+				new restify.InvalidArgumentError(JSON.stringify(err.errors))
 			);
 		}
 		res.send(201, intake);
@@ -111,18 +114,10 @@ server.listen(9000, function () {
 
 testIntakeInsert = function () {
 	var _data = {
-		meta : {
-			// id : 212123,
-			taker: {
-				name : {
-					first : 'david',
-					last: 'viramotnes'
-				},
-				contributorType : 'Volunteer'
-			},
-			caseNumber: 212323121,
-			hidden:true,
-		},
+		taker:  'david viramotnes',
+		contributorType : 'Volunteer',
+		caseNumber: 212323121,
+		hidden:true,
 		callbackNeeded : true,
 		caseType: 'H',
 		caller : {
