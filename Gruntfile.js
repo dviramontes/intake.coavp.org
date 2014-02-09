@@ -1,5 +1,8 @@
 /*global module:false*/
 module.exports = function(grunt) {
+
+    'use strict';
+
     // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
     // Time how long tasks take. Can help when optimizing build times
