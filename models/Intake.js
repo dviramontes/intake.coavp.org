@@ -1,12 +1,14 @@
 /*====================================
 
 	TODO:
-	[ ] -  refactor that requires a radio input selection
-	[ ] -  refactor Caller
-	[ ] -  refactor Taker /  User
-	[ ] - replace date with objectId TimeStamp ISO created time
+	[   ] - refactor all that requires a radio input selection
+	[--] - refactor caller
+	[X] - refactor taker /  user
+	[   ] - replace date with objectid timestamp iso created time
+	[X] - setup get one by $index
 
 ====================================*/
+
 
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
@@ -15,18 +17,18 @@ var mongoose = require('mongoose'),
 
 var IntakeSchema = new Schema({
 
-	// 1A, unique random incremented {basedOn : process id, time }
+	// 1a, unique random incremented {basedon : process id, time }
 	id: ObjectId,
-	// 1B
+	// 1b
 	taker:String,
 	contributorType: String,
-	// 2A
-	// replace with objectId TimeStamp ISO created time
+	// 2a
+	// replace with objectid timestamp iso created time
 	date: { type: Date, default: Date.now},
-	// 3
-	caseNumber: { type : Number, index: true },
+	// 3, index
+	caseNumber: { type : Number, index: {unique:true} },
 	hidden: { type: Boolean, default: false},
-	// 2B
+	// 2b
 	callbackNeeded: Boolean,
 	// 4
 	caseType: String, // radio input
@@ -49,7 +51,7 @@ var IntakeSchema = new Schema({
 			// ok to call ?
 			private : Boolean
 		},
-		// email: {type: String, unique:false},
+		// email: {type: string, unique:false},
 		email: String,
 
 	},
@@ -61,18 +63,30 @@ var IntakeSchema = new Schema({
 	referedBy: String // radio input
 });
 
-// IntakeSchema({meta: })
+// 1 means ascending order..
+// inspect index with
+// db.system.indexes.find();
 
-// next compile the Schema object into a Model
-// (registering a Model with Mongoose)
-// all interaction with the Collection is mitigated
-// thought this Model , ie. querying.
+// dont need to call ensureindex method since
+// mongoose will call t for you...
+// intakeschema.ensureindex{casenumber: 1});
 
-// This Scheme object is a simple abstraction that describes
-// how the Model looks like and how it behaves
+// drop unsed indexes with
+// db.intakes.dropindex("meta.casenumber_1");
+
+// next compile the schema object into a model
+// (registering a model with mongoose)
+// all interaction with the collection is mitigated
+// thought this model , ie. querying.
+
+// this scheme object is a simple abstraction that describes
+// how the model looks like and how it behaves
 
 var Intake = mongoose.model('Intake', IntakeSchema);
 
-// Taker = mongoose.model( 'Taker', TakerSchema);
-
 exports.Intake = Intake;
+
+// mongoshell queries for inspecting indexes
+// db.intakes.find({"caseNumber":1}).explain();
+// db.intakes.find({"caseNumber":1});
+// db.intakes.find();

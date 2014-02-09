@@ -20,6 +20,8 @@ var restify = require('restify'),
 mongoose.connect('mongodb://127.0.0.1:27017/intakes');
 var db = mongoose.connection;
 Intake = require('../models/Intake').Intake;
+// call to disconnect ,,,
+// mongoose.disconnect();
 
 db.on('error', console.error.bind(console, 'connection error:'));
 console.log('connection success'.green);
@@ -56,10 +58,12 @@ server.get('/intakes', function (req, res) {
 });
 
 // GET single
-server.get('/intake/:id', function (req, res, next) {
+server.get('/intake/:caseNumber', function (req, res, next) {
 
+	// Intake.findOne({
+	// 	_id: req.params.id
 	Intake.findOne({
-		_id: req.params.id
+		caseNumber: req.params.caseNumber
 	}, function (err, intake) {
 		if (err) {
 			return next(new restify.InvalidArgumentError(
@@ -93,19 +97,6 @@ server.post('/intake', function (req, res, next) {
 		res.send(201, intake);
 	});
 
-	// // console.log(req.params);
-	// if (req.params.name === undefined) {
-	//     console.log('name is undefined yo');
-	//     return next(new restify.InvalidArgumentError(
-	//         'Name must be supplied yo'));
-	// }
-	// console.log(req.params.name);
-	// // event handler for 'save' event
-	// Intake.on('save', function() {
-	//     console.log('new user created!');
-	// });
-
-
 });
 
 server.listen(9000, function () {
@@ -114,18 +105,18 @@ server.listen(9000, function () {
 
 testIntakeInsert = function () {
 	var _data = {
-		taker:  'david viramotnes',
+		taker:  'david zzzz',
 		contributorType : 'Volunteer',
-		caseNumber: 212323121,
-		hidden:true,
+		caseNumber: 5,
+		hidden: true,
 		callbackNeeded : true,
 		caseType: 'H',
 		caller : {
 			name : {
 				first : 'david',
-				last : 'viramontes'
+				last : 'zzzzz'
 			},
-			email :  'dvimon@msn.com',
+			email :  'user@msn.com',
 			address: '123 wash st'
 		},
 		callerPresentsAs : 'Familiy',
