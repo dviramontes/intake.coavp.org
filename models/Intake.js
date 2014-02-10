@@ -5,8 +5,8 @@
 		[X] - setup get one by $index
 		[   ] - refactor all that requires a radio input selection
 		[   ] - replace date with objectid timestamp iso created time
-		[--] - drop caseNumber index multiples
-		[	] - handle err for duplicate caseNumber
+		[X] - drop caseNumber index multiples
+		[   ] - handle err for duplicate caseNumber
 
 ====================================*/
 

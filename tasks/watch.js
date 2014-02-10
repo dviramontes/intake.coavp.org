@@ -1,17 +1,28 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
+    'use strict';
+
     grunt.config('watch', {
-        livereload: {
+
+
+        less: {
             options: {
-                livereload: '<%= connect.options.livereload %>'
+                spawn: false
+            },
+            files: ['<%= yeoman.app %>/less/{,*/}*.less'],
+            tasks: ['less']
+        },
+        changes: {
+            options: {
+                livereload: true,
             },
             files: [
-                // one level
-                '*.html', //'{,*/}*.html',  
-                '*.css', //'{,*/}*.css',
-                // '*.js', //'{,*/}*.js'  see bundle below
-                'img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+                '<%= yeoman.app %>/{,*/}*.html',
+                '{.tmp,<%= yeoman.app %>}/css/{,*/}*.css',
+                '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
+                '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
             ]
         },
+
         // bundle: {
         //     files: '*.js', //'{,*/}*.js'
         //     tasks: ['browserify'],
@@ -20,15 +31,9 @@ module.exports = function(grunt) {
         //         spawn: false
         //     }
         // },
+
         gruntfile: {
-            files: ['Gruntfile.js'],
-            tasks: ['hint:gruntfile']
-        },
-        markup: {
-            files: ['index.html', 'ccs/*.css'],
-            options: {
-                livereload: true
-            }
+            files: ['Gruntfile.js']
         }
     });
-}
+};

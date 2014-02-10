@@ -144,9 +144,12 @@ server.put('/intake/:caseNumber', function (req, res, next) {
             new: true
         }, // options
 
-        function (err, updatedIntake) { // callback
-            console.log('intake updated , caseNumber' + caseNumber);
-            res.send(200, 'updated intake with caseNumber of : ' +  caseNumber);
+        function (err) { // callback
+            if (err) {
+                res.send(err.err);
+            }
+            console.log('updated intake with caseNumber of :' + caseNumber);
+            res.send(200, 'updated intake with caseNumber of : ' + caseNumber);
         });
 });
 
