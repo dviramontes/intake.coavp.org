@@ -1,25 +1,26 @@
 /*====================================
 
-	TODO:
-	[   ]  -  put / update route
-	[   ]  -  delete route
-	[--]  -  get / single  by caseNumber
-	[X]  -  post / single
+		TODO:
+		[X]  -  delete route
+		[X]  -  get / single  by caseNumber
+		[X]  -  post / single
+		[X]  -  put / update / single route
+		[	]  -  validate post / single payload
+		[	]  -  use hapi
 
 ====================================*/
 
 'use strict';
 
 var restify = require('restify'),
-	colors = require('colors'),
-	mongoose = require('mongoose'),
-	Intake,
-	testIntakeInsert;
+    colors = require('colors'),
+    mongoose = require('mongoose'),
+    Intake,
+    testIntakeInsert;
 
 mongoose.connect('mongodb://127.0.0.1:27017/intakes');
 var db = mongoose.connection;
-Intake = require('../models/Intake')
-	.Intake;
+Intake = require('../models/Intake').Intake;
 // call to disconnect ,,,
 // mongoose.disconnect();
 
@@ -27,124 +28,163 @@ db.on('error', console.error.bind(console, 'connection error:'));
 console.log('connection success'.green);
 
 db.on('open', function callback() {
-	// testIntakeInsert();
-	console.log('database opened'.green);
+    // testIntakeInsert();
+    console.log('database opened'.green);
 });
 
 var server = restify.createServer({
-	name: 'API'
+    name: 'API'
 });
 
 server
-	.use(restify.fullResponse())
-	.use(restify.bodyParser());
+    .use(restify.fullResponse())
+    .use(restify.bodyParser());
 
 //  GET plural
 //  curl -i http://0.0.0.0:9000/user |  json
-server.get('/intakes', function(req, res) {
+server.get('/intakes', function (req, res) {
 
-	Intake.find({}, function(err, foundIntakes) {
-		if (err) { // error ?
-			res.send(err);
-		}
-		res.json(foundIntakes); // return all intakes in json
-	});
+    Intake.find({}, function (err, foundIntakes) {
+        if (err) { // error ?
+            res.send(err);
+        }
+        res.json(foundIntakes); // return all intakes in json
+    });
 });
 
 // GET single
-server.get('/intake/:caseNumber', function(req, res, next) {
+server.get('/intake/:caseNumber', function (req, res, next) {
 
-	// Intake.findOne({
-	// 	_id: req.params.id
-	Intake.findOne({
-		caseNumber: req.params.caseNumber
-	}, function(err, intake) {
-		if (err) {
-			return next(new restify.InvalidArgumentError(
-				JSON.stringify(err.errors)));
-		}
-		if (intake) {
-			res.send(intake);
-		}
-		else {
-			res.send(404);
-		}
-	});
+    Intake.findOne({
+        caseNumber: req.params.caseNumber
+    }, function (err, gotIntake) {
+        if (err) {
+            return next(new restify.InvalidArgumentError(
+                JSON.stringify(err.errors)));
+        }
+        if (gotIntake) {
+            res.send(gotIntake);
+        } else {
+            res.send(404);
+        }
+    });
 });
 
 // POST single
-server.post('/intake', function(req, res, next) {
-	// console.log(req.params);
-	if (req.params.taker === undefined) {
-		console.log('name is undefined yo');
-		return next(new restify.InvalidArgumentError(
-			'Name must be supplied yo'));
-	}
+server.post('/intake', function (req, res, next) {
+    // console.log(req.params);
+    if (req.params.taker === undefined) {
+        console.log('name is undefined yo');
+        return next(new restify.InvalidArgumentError(
+            'Name must be supplied yo'));
+    }
 
-	Intake.create({
-		taker: req.params.taker
-	}, function(err, intake) {
-		if (err) {
-			return next(
-				new restify.InvalidArgumentError(JSON.stringify(err.errors))
-			);
-		}
-		res.send(201, intake);
-	});
+    return (new Intake(req.params)
+        .save(function (err, savedIntake) {
+            if (err) {
+                console.warn('duplicate caseNumber, skipping post');
+                console.dir(err);
+                return next(res.send(JSON.stringify(err.err)));
+            }
+            res.send(201, savedIntake);
+        }));
 
 });
 
 // DELETE single
-server.del('/intake/:caseNumber', function(req,res,next){
-	Intake.remove({
-		caseNumber: req.params.caseNumber
-	}, function(err, deletedIntake){
-		if(err) {
-			return next(
-				new restify.InvalidArgumentError(JSON.stringify(err.errors))
-			);
-		}
-		res.send(200, 'Deleted intake with caseNumber of :' + deletedIntake);
-	});
+server.del('/intake/:caseNumber', function (req, res, next) {
+    Intake.remove({
+        caseNumber: req.params.caseNumber
+    }, function (err, deletedIntake) {
+        if (err) {
+            return next(
+                new restify.InvalidArgumentError(JSON.stringify(err.errors))
+            );
+        }
+        res.send(200, 'Deleted intake with caseNumber of :' + deletedIntake);
+    });
 });
 
-server.listen(9000, function() {
-	console.log('%s Listening at %s', server.name, server.url);
+// UPDATE single
+server.put('/intake/:caseNumber', function (req, res, next) {
+
+    var caseNumber = req.params.caseNumber || undefined;
+    if (caseNumber === undefined) {
+        console.log('A case number must be provided for this route');
+        return next(new restify.InvalidArgumentError(
+            'A case number must be provided for this route'));
+    }
+
+    // alias
+    var _ = req.params;
+    var _caller = _.caller;
+
+    var update = {
+        'taker': _.taker,
+        'contributorType': _.contributorType,
+        'caseNumber': _.caseNumber,
+        'hidden': _.hidden,
+        'callbackNeeded': _.callbackNeeded,
+        'caseType': _.caseType,
+        'caller': {
+            'first': _caller.first,
+            'last': _caller.last,
+            'email': _caller.email,
+            'address': _caller.address,
+        },
+        'callerPresentsAs': _.callerPresentsAs,
+        'referedBy': _.referedBy
+    };
+
+    Intake.findOneAndUpdate({
+            'caseNumber': caseNumber
+        }, // conditions
+        update, // payload
+        {
+            new: true
+        }, // options
+
+        function (err, updatedIntake) { // callback
+            console.log('intake updated , caseNumber' + caseNumber);
+            res.send(200, 'updated intake with caseNumber of : ' +  caseNumber);
+        });
 });
 
-testIntakeInsert = function() {
-	var _data = {
-		'taker': 'david zzzz',
-		'contributorType': 'Volunteer',
-		'caseNumber': 1,
-		'hidden': true,
-		'callbackNeeded': true,
-		'caseType': 'H',
-		'caller': {
-			'name': {
-				'first': 'david',
-				'last': 'zzzzz'
-			},
-			'email': 'user@msn.com',
-			'address': '123 wash st'
-		},
-		'callerPresentsAs': 'Familiy',
-		'referedBy': 'Familiy'
-	};
+server.listen(9000, function () {
+    console.log('%s Listening at %s', server.name, server.url);
+});
 
-	return new Intake(_data)
-		.save(function(err, savedIntake) {
-			if (err) {
-				throw err;
-			}
-			console.log('test intake001 was successful'.green);
-			console.dir(savedIntake);
-		});
+testIntakeInsert = function () {
+    var _data = {
+        'taker': 'david zzzz',
+        'contributorType': 'Volunteer',
+        'caseNumber': 11,
+        'hidden': true,
+        'callbackNeeded': true,
+        'caseType': 'H',
+        'caller': {
+            'first': 'david',
+            'last': 'zzzzz',
+            'email': 'user@msn.com',
+            'address': '123 wash st'
+        },
+        'callerPresentsAs': 'Familiy',
+        'referedBy': 'Familiy'
+    };
+
+    return (new Intake(_data)
+        .save(function (err, savedIntake) {
+            if (err) {
+                throw err;
+            }
+            console.log('test intake001 was successful'.green);
+            console.dir(savedIntake);
+        }));
 };
 
 // http://stackoverflow.com/questions/5535610/mongoose-unique-index-not-working
-Intake.on('index', function(err) {
-	if (err) {
-		console.error(err);
-	}
+Intake.on('index', function (err) {
+    if (err) {
+        console.error(err);
+    }
 });
