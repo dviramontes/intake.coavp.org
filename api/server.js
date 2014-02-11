@@ -38,11 +38,12 @@ var server = restify.createServer({
 
 server
     .use(restify.fullResponse())
-    .use(restify.bodyParser());
+    .use(restify.bodyParser())
+    .use(restify.CORS()); // Access-Control-Allow-Origin
 
 //  GET plural
 //  curl -i http://0.0.0.0:9000/user |  json
-server.get('/intakes', function (req, res) {
+server.get('/api/intakes', function (req, res) {
 
     Intake.find({}, function (err, foundIntakes) {
         if (err) { // error ?
@@ -53,7 +54,7 @@ server.get('/intakes', function (req, res) {
 });
 
 // GET single
-server.get('/intake/:caseNumber', function (req, res, next) {
+server.get('/api/intake/:caseNumber', function (req, res, next) {
 
     Intake.findOne({
         caseNumber: req.params.caseNumber
@@ -71,7 +72,7 @@ server.get('/intake/:caseNumber', function (req, res, next) {
 });
 
 // POST single
-server.post('/intake', function (req, res, next) {
+server.post('/api/intake', function (req, res, next) {
     // console.log(req.params);
     if (req.params.taker === undefined) {
         console.log('name is undefined yo');
@@ -92,7 +93,7 @@ server.post('/intake', function (req, res, next) {
 });
 
 // DELETE single
-server.del('/intake/:caseNumber', function (req, res, next) {
+server.del('/api/intake/:caseNumber', function (req, res, next) {
     Intake.remove({
         caseNumber: req.params.caseNumber
     }, function (err, deletedIntake) {
@@ -106,7 +107,7 @@ server.del('/intake/:caseNumber', function (req, res, next) {
 });
 
 // UPDATE single
-server.put('/intake/:caseNumber', function (req, res, next) {
+server.put('/api/intake/:caseNumber', function (req, res, next) {
 
     var caseNumber = req.params.caseNumber || undefined;
     if (caseNumber === undefined) {

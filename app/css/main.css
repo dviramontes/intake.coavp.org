@@ -1,7 +1,7 @@
 body {
   background: #cccccc;
+  background: url('../img/zwartevilt/zwartevilt_2.png') 0 0 repeat;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #333;
 }
 .hero-unit {
   margin: 50px auto 0 auto;
@@ -21,4 +21,7 @@ body {
 .mainNav ul li {
   padding: 15px;
   color: #cccccc;
+}
+a.navbar-brand {
+  color: #ffffff;
 }

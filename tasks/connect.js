@@ -4,7 +4,7 @@ module.exports = function (grunt) {
         server: {
             options: {
                 open: true,
-                port: 9000,
+                port: 9005,
                 livereload:true,
                 hostname: '*',   // makes domain accessable to vms and world
                 base: '<%= yeoman.app %>',

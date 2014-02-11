@@ -21,7 +21,7 @@ angular.module('IntakeApp')
         // load the page with intakes
         $scope.formData = {};
 
-        $http.get('/api/intakes')
+        $http.get('http://0.0.0.0:9000/api/intakes')
             .success(function (data) {
                 $scope.intakes = data;
                 init();
