@@ -1,40 +1,62 @@
-// vars
-@bgcolor : #ccc;
-@white: white;
-
-body {
-    // background: #fafafa;
-    background: @bgcolor;
-    background:  url('../img/zwartevilt/zwartevilt_2.png') 0 0 repeat;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    // color: #ccc;
+// @import"./utils/topcoat-search-input--large.less";
+ @theme : #4A4D4E;
+ @theme2 : #eee;
+ @white: white;
+ body {
+        // background: #fafafa;
+        background: @theme;
+        // background: url('../img/zwartevilt/zwartevilt_2.png') 0 0 repeat;
+        font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: @theme;
 }
-
+h1, h2, h3 {
+        color: @theme;
+}
 .hero-unit {
-    margin: 50px auto 0 auto;
-    width: 300px;
-    font-size: 18px;
-    font-weight: 200;
-    line-height: 30px;
-    background-color: #eee;
-    border-radius: 6px;
-    padding: 60px;
+        margin: 50px auto 0 auto;
+        width: 300px;
+        font-size: 18px;
+        font-weight: 200;
+        line-height: 30px;
+        background-color: #eee;
+        border-radius: 6px;
+        padding: 60px;
 }
-
 .hero-unit h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
+        font-size: 60px;
+        line-height: 1;
+        letter-spacing: -1px;
 }
-
-
-// main nav
-.mainNav ul li {
-    padding: 15px;
-    color: @bgcolor;
+nav .mainNav ul li {
+        padding: 15px;
+        color: #ccc;
 }
-
-
-a.navbar-brand{
-    color:@white;
+a.navbar-brand {
+        color:@theme2;
+}
+.navbar-inverse .navbar-brand {
+        margin-top: 5px;
+        color:@theme2;
+        // font-size:
+}
+.navbar-inverse, .navbar-collapse {
+        margin-top: 5px;
+        border-color: @theme;
+        background: @theme;
+}
+.jumpToCaseNumbe {
+        padding: 1em;
+        left: 15%;
+        color:@white;
+        margin-top: -10px;
+        margin-left: 5px;
+        input.topcoat-search-input--large {
+                border-radius: 4px;
+                // width: 20%;
+                // background-position: right 7px bottom 15px;
+                background-image:none;
+        }
+        label {
+                margin-top: 10px;
+        }
 }

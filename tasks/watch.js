@@ -3,10 +3,12 @@ module.exports = function (grunt) {
 
     grunt.config('watch', {
 
-
+        options :{
+            livereload: true
+        },
         less: {
             options: {
-                spawn: false
+                spawn: true
             },
             files: ['<%= yeoman.app %>/less/{,*/}*.less'],
             tasks: ['less']

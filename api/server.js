@@ -44,7 +44,6 @@ server
 //  GET plural
 //  curl -i http://0.0.0.0:9000/user |  json
 server.get('/api/intakes', function (req, res) {
-
     Intake.find({}, function (err, foundIntakes) {
         if (err) { // error ?
             res.send(err);
@@ -55,7 +54,6 @@ server.get('/api/intakes', function (req, res) {
 
 // GET single
 server.get('/api/intake/:caseNumber', function (req, res, next) {
-
     Intake.findOne({
         caseNumber: req.params.caseNumber
     }, function (err, gotIntake) {
@@ -108,15 +106,13 @@ server.del('/api/intake/:caseNumber', function (req, res, next) {
 
 // UPDATE single
 server.put('/api/intake/:caseNumber', function (req, res, next) {
-
     var caseNumber = req.params.caseNumber || undefined;
     if (caseNumber === undefined) {
         console.log('A case number must be provided for this route');
         return next(new restify.InvalidArgumentError(
             'A case number must be provided for this route'));
     }
-
-    // alias
+    // aliases
     var _ = req.params;
     var _caller = _.caller;
 
@@ -162,7 +158,7 @@ testIntakeInsert = function () {
     var _data = {
         'taker': 'david zzzz',
         'contributorType': 'Volunteer',
-        'caseNumber': 11,
+        'caseNumber': 100,
         'hidden': true,
         'callbackNeeded': true,
         'caseType': 'H',
@@ -173,7 +169,8 @@ testIntakeInsert = function () {
             'address': '123 wash st'
         },
         'callerPresentsAs': 'Familiy',
-        'referedBy': 'Familiy'
+        'referedBy': 'Familiy',
+        'summaryNotes': 'lorem lorem'
     };
 
     return (new Intake(_data)

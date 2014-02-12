@@ -1,7 +1,12 @@
 body {
-  background: #cccccc;
-  background: url('../img/zwartevilt/zwartevilt_2.png') 0 0 repeat;
+  background: #4a4d4e;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #4a4d4e;
+}
+h1,
+h2,
+h3 {
+  color: #4a4d4e;
 }
 .hero-unit {
   margin: 50px auto 0 auto;
@@ -18,10 +23,34 @@ body {
   line-height: 1;
   letter-spacing: -1px;
 }
-.mainNav ul li {
+nav .mainNav ul li {
   padding: 15px;
-  color: #cccccc;
+  color: #ccc;
 }
 a.navbar-brand {
+  color: #eeeeee;
+}
+.navbar-inverse .navbar-brand {
+  margin-top: 5px;
+  color: #eeeeee;
+}
+.navbar-inverse,
+.navbar-collapse {
+  margin-top: 5px;
+  border-color: #4a4d4e;
+  background: #4a4d4e;
+}
+.jumpToCaseNumbe {
+  padding: 1em;
+  left: 15%;
   color: #ffffff;
+  margin-top: -10px;
+  margin-left: 5px;
+}
+.jumpToCaseNumbe input.topcoat-search-input--large {
+  border-radius: 4px;
+  background-image: none;
+}
+.jumpToCaseNumbe label {
+  margin-top: 10px;
 }

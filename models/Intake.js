@@ -62,7 +62,10 @@ var IntakeSchema = new Schema({
 	// 7
 	callerAssessedAs: String, // radio input
 	// 8
-	referedBy: String // radio input
+	referedBy: String, // radio input
+
+	// extras
+	summaryNotes : {type:String, max:10}
 });
 
 // 1 means ascending order..

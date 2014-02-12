@@ -14,7 +14,12 @@
 
         <div class="mainNav">
             <ul class="nav navbar-collapse nav-pills">
-
+                <li class="jumpToCaseNumbe">
+                    <label for="number">Jump to case #</label>
+                    <input type="number" min="0" max="1000" step="1" value="000" class="topcoat-search-input--large" >
+                     
+                     <button class="topcoat-button--large--cta">Go</button>
+                </li>
                 <li class="pull-right">
                     <b>Total Intakes</b>
                     <span class="label label-info">{{ intakes.length }}</span>
@@ -23,7 +28,6 @@
                     <b>Users </b>
                     <span class="label label-warning">{{ (1) }}</span>
                 </li>
-
             </ul>
         </div>
     </nav>
@@ -68,19 +72,21 @@
                     <input type="text" class="form-control" placeholder="first" data-ng-model="formData.caller.first">
                     <input type="text" class="form-control" placeholder="last" data-ng-model="formData.caller.last">
                 </div>
-                <div class="input-group">
+                <form class="input-group">
+
                     <span class="input-group-addon">Email</span>
                     <div class="btn-group">
                         <!-- email  field -->
-                        <input type="text" class="form-control" placeholder="caller@" size="100%" data-ng-model="formData.email">
+                        <input type="email" class="form-control" placeholder="caller@" size="100%" data-ng-model="formData.email">
                         <button type="button" class="btn btn-default" data-ng-click="emailPlaceholder('gmail')">gmail</button>
                         <button type="button" class="btn  btn-default" data-ng-click="emailPlaceholder('yahoo')">yahoo</button>
                         <button type="button" class="btn  btn-default" data-ng-click="emailPlaceholder('hotmail')">hotmail</button>
                         <button type="button" class="btn  btn-default" data-ng-click="emailPlaceholder('facebook')">facebook</button>
                         <button type="button" class="btn  btn-default" data-ng-click="emailPlaceholder('facebook')">facebook</button>
                     </div>
-                </div>
-                <div class="panel-footer container">{{ formData.email  }} {{ emailPlaceholder() }}</div>
+                </form>
+
+                <div class="panel-footer container">{{ formData.email }} {{ emailPlaceholder() }}</div>
             </div>
 
 
