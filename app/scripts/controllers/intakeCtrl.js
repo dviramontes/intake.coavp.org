@@ -21,10 +21,20 @@ angular.module('IntakeApp')
         // load the page with intakes
         $scope.formData = {};
 
+        // $scope.emailPlaceholder = function(val){
+        //     console.log(val);
+            
+        // }
+        
+        $scope.callbackNeeded = function(val){
+            
+            $scope.formData.callbackNeeded = val;
+        }   
+
         $http.get('http://0.0.0.0:9000/api/intakes')
             .success(function (data) {
                 $scope.intakes = data;
-                init();
+                // init();
                 console.log(data);
             })
             .error(function (data) {

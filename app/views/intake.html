@@ -43,8 +43,8 @@
                         <div class="col-md-6">
                             <b for="checkbox">Callback needed ?</b>
                             <div class="btn-group">
-                                <button type="button" class="btn btn-default">Yes</button>
-                                <button type="button" class="btn  btn-default">No</button>
+                                <button type="button" class="btn btn-default" data-ng-click="callbackNeeded(true)">Yes</button>
+                                <button type="button" class="btn  btn-default" data-ng-click="callbackNeeded(false)">No</button>
                             </div>
                         </div>
                     </div>
@@ -65,31 +65,31 @@
                 <!-- <legend>Caller</legend> -->
                 <div class="input-group">
                     <span class="input-group-addon">Caller's</span>
-                    <input type="text" class="form-control" placeholder="first">
-                    <input type="text" class="form-control" placeholder="last">
+                    <input type="text" class="form-control" placeholder="first" data-ng-model="formData.caller.first">
+                    <input type="text" class="form-control" placeholder="last" data-ng-model="formData.caller.last">
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">Email</span>
-
                     <div class="btn-group">
-                     <input type="text" class="form-control" placeholder="caller@" size="100%">
-                        <button type="button" class="btn btn-default">gmail</button>
-                        <button type="button" class="btn  btn-default">yahoo</button>
-                        <button type="button" class="btn  btn-default">hotmail</button>
-                        <button type="button" class="btn  btn-default">facebook</button>
-                        <button type="button" class="btn  btn-default">facebook</button>
+                        <!-- email  field -->
+                        <input type="text" class="form-control" placeholder="caller@" size="100%" data-ng-model="formData.email">
+                        <button type="button" class="btn btn-default" data-ng-click="emailPlaceholder('gmail')">gmail</button>
+                        <button type="button" class="btn  btn-default" data-ng-click="emailPlaceholder('yahoo')">yahoo</button>
+                        <button type="button" class="btn  btn-default" data-ng-click="emailPlaceholder('hotmail')">hotmail</button>
+                        <button type="button" class="btn  btn-default" data-ng-click="emailPlaceholder('facebook')">facebook</button>
+                        <button type="button" class="btn  btn-default" data-ng-click="emailPlaceholder('facebook')">facebook</button>
                     </div>
                 </div>
-                <div class="panel-footer container">dviramontes@gmail.com</div>
+                <div class="panel-footer container">{{ formData.email  }} {{ emailPlaceholder() }}</div>
             </div>
 
 
 
-<!--             <form class="form-group">
+            <!--             <form class="form-group">
                 <p class="col-lg-12">
                     <label for="taker">Name</label> -->
-                    <!-- bind this val to for data.name in angular -->
-   <!--                  <input type="text" id="taker" class="input-lg" placeholder="Volunteer or staff" ng-model="formData.taker" size="24" name="taker" required>
+            <!-- bind this val to for data.name in angular -->
+            <!--                  <input type="text" id="taker" class="input-lg" placeholder="Volunteer or staff" ng-model="formData.taker" size="24" name="taker" required>
                 </p>
                 <p class="col-lg-12">
                     <label for="date">Date</label>
@@ -104,13 +104,13 @@
                         <option value="media">media</option>
                     </select>
                 </p> -->
-                <!-- <p class="col-lg-12"> -->
-                <!-- <label for="formData.date">Time:</label> -->
-                <!-- <input type="text" id="datepicker" class="input-lg" placeholder="date" ng-model="intake.time" size="1" required> -->
-                <!-- </p> -->
-                <!-- createIntake() will create new intake data -->
-                
-<!--                 <button type="submit" class="btn btn-primary btn-lg pull-right" ng-click="createIntake()">SUBMIT</button>
+            <!-- <p class="col-lg-12"> -->
+            <!-- <label for="formData.date">Time:</label> -->
+            <!-- <input type="text" id="datepicker" class="input-lg" placeholder="date" ng-model="intake.time" size="1" required> -->
+            <!-- </p> -->
+            <!-- createIntake() will create new intake data -->
+
+            <!--                 <button type="submit" class="btn btn-primary btn-lg pull-right" ng-click="createIntake()">SUBMIT</button>
             </form> -->
         </div>
     </div>
