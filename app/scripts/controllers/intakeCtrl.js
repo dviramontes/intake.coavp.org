@@ -12,7 +12,7 @@
 **/
 
 var init = function () {
-    // $("#datepicker").datepicker();
+    // $('#datepicker').datepicker();
 };
 
 angular.module('IntakeApp')
@@ -24,16 +24,16 @@ angular.module('IntakeApp')
 
         // $scope.emailPlaceholder = function(val){
         //     console.log(val);
-
         // }
+
         $scope.jumpToCaseNumber = function (val) {
             console.log(val);
             $scope.caseNumber = val;
-        }
+        };
 
         $scope.callbackNeeded = function (val) {
             $scope.formData.callbackNeeded = val;
-        }
+        };
 
         $http.get('http://0.0.0.0:9000/api/intakes')
             .success(function (data) {
@@ -55,25 +55,25 @@ angular.module('IntakeApp')
                     $scope.formData = {};
                     // update the intakes on the view
                     $scope.intakes = data;
-                    console.info("Created obj in DB");
+                    console.info('Created obj in DB');
                 })
                 .error(function (data) {
-                    console.log("Error: " + data);
+                    console.log('Error: ' + data);
                 });
-        }
+        };
 
         // delete intake after checking box
         $scope.deleteIntake = function (id) {
             $http.delete('/api/intakes/' + id)
                 .success(function (data) {
-                    console.info("Deleted obj with id of : " + id + " from DB");
+                    console.info('Deleted obj with id of : ' + id + ' from DB');
                     $scope.intakes = data;
 
                 })
                 .error(function (data) {
-                    console.error("Error: " + data);
+                    console.error('Error: ' + data);
                 });
-        }
+        };
 
         // $scope.awesomeThings = [
         //     'HTML5 Boilerplate',
