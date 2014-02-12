@@ -16,7 +16,7 @@
             <ul class="nav navbar-collapse nav-pills">
                 <li class="jumpToCaseNumbe">
                     <label for="number">Jump to case #</label>
-                    <input type="number" min="0" max="1000" step="1" value="000" class="topcoat-search-input--large" >
+                    <input type="number" min="0" max="1000" step="1"   data-ng-change="jumpToCaseNumber(value)" ng-model="value" class="topcoat-search-input--large" >
                      
                      <button class="topcoat-button--large--cta">Go</button>
                 </li>
@@ -123,7 +123,7 @@
     <!-- end begin form -->
 
     <!-- begin debug -->
-    <div class="col-md-6" ng-repeat="intake in intakes">
+    <div class="col-md-6" ng-repeat="intake in intakes" ng-if="intake.caseNumber === caseNumber ">
         <div class="checkbox">
             <label>
                 <input type="checkbox" ng-click="deleteIntake( intake._id)" value="">{{ intake.taker}}
