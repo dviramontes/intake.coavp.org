@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('IntakeApp', ['ui.router'])
-    .config(function ($stateProvider, $urlRouterProvider) {
+    .config(function($stateProvider, $urlRouterProvider) {
         // if the path doesn't match any of the urls you configured
         // otherwise will take care of routing the user to the specified url
         $urlRouterProvider.otherwise('/intake');
@@ -23,4 +23,7 @@ angular.module('IntakeApp', ['ui.router'])
         //         $scope.item = $stateParams.item;
         //     }
         // });
+    }).factory('Intake', function() { // for singleton object
+        var Intake = {};
+        return Intake;
     });

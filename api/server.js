@@ -1,12 +1,12 @@
 /*====================================
 
-		TODO:
-		[X]  -  delete route
-		[X]  -  get / single  by caseNumber
-		[X]  -  post / single
-		[X]  -  put / update / single route
-		[	]  -  validate post / single payload
-		[	]  -  use hapi
+        TODO:
+        [X]  -  delete route
+        [X]  -  get / single  by caseNumber
+        [X]  -  post / single
+        [X]  -  put / update / single route
+        [  ]  -  validate post / single payload
+        [  ]  -  use hapi
 
 ====================================*/
 
@@ -43,9 +43,9 @@ server
 
 //  GET plural
 //  curl -i http://0.0.0.0:9000/user |  json
-server.get('/api/intakes', function (req, res) {
+server.get('/api/intakes', function(req, res) {
 
-    Intake.find({}, function (err, foundIntakes) {
+    Intake.find({}, function(err, foundIntakes) {
         if (err) { // error ?
             res.send(err);
         }
@@ -54,11 +54,11 @@ server.get('/api/intakes', function (req, res) {
 });
 
 // GET single
-server.get('/api/intake/:caseNumber', function (req, res, next) {
+server.get('/api/intake/:caseNumber', function(req, res, next) {
 
     Intake.findOne({
         caseNumber: req.params.caseNumber
-    }, function (err, gotIntake) {
+    }, function(err, gotIntake) {
         if (err) {
             return next(new restify.InvalidArgumentError(
                 JSON.stringify(err.errors)));
@@ -72,7 +72,7 @@ server.get('/api/intake/:caseNumber', function (req, res, next) {
 });
 
 // POST single
-server.post('/api/intake', function (req, res, next) {
+server.post('/api/intake', function(req, res, next) {
     // console.log(req.params);
     if (req.params.taker === undefined) {
         console.log('name is undefined yo');
@@ -81,7 +81,7 @@ server.post('/api/intake', function (req, res, next) {
     }
 
     return (new Intake(req.params)
-        .save(function (err, savedIntake) {
+        .save(function(err, savedIntake) {
             if (err) {
                 console.warn('duplicate caseNumber, skipping post');
                 console.dir(err);
@@ -93,10 +93,10 @@ server.post('/api/intake', function (req, res, next) {
 });
 
 // DELETE single
-server.del('/api/intake/:caseNumber', function (req, res, next) {
+server.del('/api/intake/:caseNumber', function(req, res, next) {
     Intake.remove({
         caseNumber: req.params.caseNumber
-    }, function (err, deletedIntake) {
+    }, function(err, deletedIntake) {
         if (err) {
             return next(
                 new restify.InvalidArgumentError(JSON.stringify(err.errors))
@@ -107,7 +107,7 @@ server.del('/api/intake/:caseNumber', function (req, res, next) {
 });
 
 // UPDATE single
-server.put('/api/intake/:caseNumber', function (req, res, next) {
+server.put('/api/intake/:caseNumber', function(req, res, next) {
 
     var caseNumber = req.params.caseNumber || undefined;
     if (caseNumber === undefined) {
@@ -145,7 +145,7 @@ server.put('/api/intake/:caseNumber', function (req, res, next) {
             new: true
         }, // options
 
-        function (err) { // callback
+        function(err) { // callback
             if (err) {
                 res.send(err.err);
             }
@@ -154,11 +154,11 @@ server.put('/api/intake/:caseNumber', function (req, res, next) {
         });
 });
 
-server.listen(9000, function () {
+server.listen(9000, function() {
     console.log('%s Listening at %s', server.name, server.url);
 });
 
-testIntakeInsert = function () {
+testIntakeInsert = function() {
     var _data = {
         'taker': 'david zzzz',
         'contributorType': 'Volunteer',
@@ -177,7 +177,7 @@ testIntakeInsert = function () {
     };
 
     return (new Intake(_data)
-        .save(function (err, savedIntake) {
+        .save(function(err, savedIntake) {
             if (err) {
                 throw err;
             }
@@ -187,7 +187,7 @@ testIntakeInsert = function () {
 };
 
 // http://stackoverflow.com/questions/5535610/mongoose-unique-index-not-working
-Intake.on('index', function (err) {
+Intake.on('index', function(err) {
     if (err) {
         console.error(err);
     }
