@@ -1,12 +1,12 @@
 /*====================================
 
-		TODO:
-		[X]  -  delete route
-		[X]  -  get / single  by caseNumber
-		[X]  -  post / single
-		[X]  -  put / update / single route
-		[	]  -  validate post / single payload
-		[	]  -  use hapi
+  TODO:
+  [X]  -  delete route
+  [X]  -  get / single  by caseNumber
+  [X]  -  post / single
+  [X]  -  put / update / single route
+  [ ]  -  validate post / single payload
+  [ ]  -  use hapi
 
 ====================================*/
 
@@ -15,6 +15,7 @@
 var restify = require('restify'),
     colors = require('colors'),
     mongoose = require('mongoose'),
+    _ = require('lodash'),
     Intake,
     testIntakeInsert;
 
@@ -154,11 +155,13 @@ server.listen(9000, function () {
     console.log('%s Listening at %s', server.name, server.url);
 });
 
-testIntakeInsert = function () {
+testIntakeInsert = function (n) {
+    var x = n || 1;
+
     var _data = {
         'taker': 'david zzzz',
         'contributorType': 'Volunteer',
-        'caseNumber': 100,
+        'caseNumber': x,
         'hidden': true,
         'callbackNeeded': true,
         'caseType': 'H',
@@ -169,6 +172,7 @@ testIntakeInsert = function () {
             'address': '123 wash st'
         },
         'callerPresentsAs': 'Familiy',
+        'callerAssessedAs': 'Friend',
         'referedBy': 'Familiy',
         'summaryNotes': 'lorem lorem'
     };
@@ -189,3 +193,15 @@ Intake.on('index', function (err) {
         console.error(err);
     }
 });
+
+var makeOneXNumOfIntakes = (function (num) {
+    _.times(num, function (n) {
+        try {
+            console.log("creating intake..");
+            testIntakeInsert(n);
+        } catch (e) {
+            throw new Error(e);
+        }
+    });
+});
+// })(100);

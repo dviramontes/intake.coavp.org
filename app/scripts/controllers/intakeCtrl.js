@@ -11,23 +11,23 @@
             filling out intake.
 **/
 
-var init = function () {
-    // $('#datepicker').datepicker();
-};
+// var init = function () {
+// $('#datepicker').datepicker();  // use angular ui component instead
+// };
 
 angular.module('IntakeApp')
     .controller('intakeCtrl', function ($scope, $http) {
 
+        var restEndPoint = 'http://0.0.0.0:9000/api/';
+
         // load the page with intakes
         $scope.formData = {};
         $scope.caseNumber = 0;
-
-        // $scope.emailPlaceholder = function(val){
-        //     console.log(val);
-        // }
+        $scope.callerTypes = ['Family', 'Friends', 'Romantic', 'Offender', 'Service Provider', 'Organization Survivor/Victim', 'Survivor/Victim', 'Witness', 'Other'];
+        $scope.assessTypes = $scope.callerTypes;
+        $scope.violenceCategories = ['H', 'I', 'O','P','S','Z'];
 
         $scope.jumpToCaseNumber = function (val) {
-            console.log(val);
             $scope.caseNumber = val;
         };
 
@@ -35,11 +35,11 @@ angular.module('IntakeApp')
             $scope.formData.callbackNeeded = val;
         };
 
-        $http.get('http://0.0.0.0:9000/api/intakes')
+        $http.get(restEndPoint + 'intakes')
             .success(function (data) {
                 $scope.intakes = data;
                 // init();
-                console.log(data);
+                // console.log(data);
             })
             .error(function (data) {
                 console.log('Error: ' + data);
@@ -49,7 +49,7 @@ angular.module('IntakeApp')
         // submit the add form, send the
         // text to the node API
         $scope.createIntake = function () {
-            $http.post('/api/intakes/', $scope.formData)
+            $http.post(restEndPoint + 'intake', $scope.formData)
                 .success(function (data) {
                     // clear from after form submission
                     $scope.formData = {};
@@ -64,9 +64,10 @@ angular.module('IntakeApp')
 
         // delete intake after checking box
         $scope.deleteIntake = function (id) {
-            $http.delete('/api/intakes/' + id)
+            $http.delete(restEndPoint + 'intake/' + id)
                 .success(function (data) {
                     console.info('Deleted obj with id of : ' + id + ' from DB');
+                    console.log(data);
                     $scope.intakes = data;
 
                 })
