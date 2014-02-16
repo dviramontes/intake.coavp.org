@@ -27,6 +27,14 @@ h1, h2, h3 {
         line-height: 1;
         letter-spacing: -1px;
 }
+.fa-stack {
+        color: @theme ;
+        // border-color:  #ccc;
+}
+nav .mainNav > {
+        margin-top: -10px;
+        margin-top: -10px;
+}
 nav .mainNav ul li {
         padding: 15px;
         color: #ccc;
@@ -44,11 +52,11 @@ a.navbar-brand {
         border-color: @theme;
         background: @theme;
 }
-.jumpToCaseNumbe {
-        padding: 1em;
-        left: 15%;
-        color:@white;
-        margin-top: -10px;
+.jumpToCaseNumber {
+        // padding: 1em;
+        // left: 5%;
+        // color:@white;
+        // margin-top: -10px;
         margin-left: 5px;
         input.topcoat-search-input--large {
                 border-radius: 4px;
@@ -60,10 +68,7 @@ a.navbar-brand {
                 margin-top: 10px;
         }
 }
-
-//  ng-animate 
-
-.animate-switch-container {
+ng-animate .animate-switch-container {
         position:relative;
         background:white;
         border:1px solid black;
@@ -88,20 +93,14 @@ a.navbar-brand {
 .animate-switch.ng-leave, .animate-switch.ng-enter.ng-enter-active {
         top:0;
 }
-
-
-// checkboxes
-
-.title {
-  letter-spacing: -.065em
+checkboxes .title {
+        letter-spacing: -.065em
 }
-
 .spacer {
-  padding: 25px 0;
+        padding: 25px 0;
 }
-
 input[type=checkbox] {
-  border: 0;
+        border: 0;
         clip: rect(0 0 0 0);
         height: 2rem;
         margin: 0 -2rem -2rem 0;
@@ -109,82 +108,74 @@ input[type=checkbox] {
         padding: 0;
         position: absolute;
         width: 2rem;
-  opacity: 0.001;
+        opacity: 0.001;
 }
-
 .topcoat-checkbox {
-  position: relative;
-  display: inline-block;
-  line-height: 2rem;
-  
-  -webkit-user-select: none;
+        position: relative;
+        display: inline-block;
+        line-height: 2rem;
+        -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
 }
-
 .topcoat-checkbox__checkmark {
-  display: inline-block;
-  vertical-align: top;
-  width: 2rem;
-  height: 2rem;
-  
-  -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-}
-
-/* Background */
-.topcoat-checkbox__checkmark:before {
-  content: '';
-  position: absolute;
-  box-sizing: border-box;
+        display: inline-block;
+        vertical-align: top;
         width: 2rem;
         height: 2rem;
-  background: #e5e9e9;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+}
+/* Background */
+ .topcoat-checkbox__checkmark:before {
+        content:'';
+        position: absolute;
+        box-sizing: border-box;
+        width: 2rem;
+        height: 2rem;
+        background: #e5e9e9;
         border: 1px solid #a5a8a8;
         border-radius: 3px;
-  cursor: pointer;
-  
+        cursor: pointer;
         -webkit-box-shadow: inset 0 1px #fff;
         box-shadow: inset 0 1px #fff;
 }
-
 /* Checkmark */
-.topcoat-checkbox__checkmark:after {
-  opacity: 0;
-        content: '';
+ .topcoat-checkbox__checkmark:after {
+        opacity: 0;
+        content:'';
         position: absolute;
-  /* Length of check tail */
-  width: 28px; 
-  /* Lenght of check foot */
-  height: 11px;
+        /* Length of check tail */
+        width: 28px;
+        /* Lenght of check foot */
+        height: 11px;
         background: transparent;
         border: 7px solid #666666;
         border-top: none;
         border-right: none;
         border-radius: 2px;
-
         -webkit-transform: rotate(-50deg);
         -moz-transform: rotate(-50deg);
         -o-transform: rotate(-50deg);
         -ms-transform: rotate(-50deg);
         transform: rotate(-50deg);
 }
-
 :checked + .topcoat-checkbox__checkmark:after {
         opacity: 1;
 }
-
 :focus + .topcoat-checkbox__checkmark:before {
-  border: 1px solid #0940fd;
-  -webkit-box-shadow: 0 0 0 2px #6fb5f1;
-  box-shadow: 0 0 0 2px #6fb5f1;
+        border: 1px solid #0940fd;
+        -webkit-box-shadow: 0 0 0 2px #6fb5f1;
+        box-shadow: 0 0 0 2px #6fb5f1;
 }
-
 :disabled + .topcoat-checkbox__checkmark:before {
-  opacity: 0.3;
-  cursor: default;
-  pointer-events: none;
+        opacity: 0.3;
+        cursor: default;
+        pointer-events: none;
+}
+.topcoat-textarea {
+        margin-bottom: 20px;
 }

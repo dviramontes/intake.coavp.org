@@ -72,8 +72,8 @@ server.get('/api/intake/:caseNumber', function (req, res, next) {
 
 // POST single
 server.post('/api/intake', function (req, res, next) {
-    // console.log(req.params);
-    if (req.params.taker === undefined) {
+    console.log(req.params);
+    if (req.params.caller.first === undefined) {
         console.log('name is undefined yo');
         return next(new restify.InvalidArgumentError(
             'Name must be supplied yo'));
@@ -107,11 +107,13 @@ server.del('/api/intake/:caseNumber', function (req, res, next) {
 
 // UPDATE single
 server.put('/api/intake/:caseNumber', function (req, res, next) {
+    console.log('printing req.params'.red);
+    console.dir(req.params);
     var caseNumber = req.params.caseNumber || undefined;
     if (caseNumber === undefined) {
-        console.log('A case number must be provided for this route');
+        console.log('A case number must be provided update route');
         return next(new restify.InvalidArgumentError(
-            'A case number must be provided for this route'));
+            'A case number must be provided update route'));
     }
     // aliases
     var _ = req.params;
@@ -120,7 +122,7 @@ server.put('/api/intake/:caseNumber', function (req, res, next) {
     var update = {
         'taker': _.taker,
         'contributorType': _.contributorType,
-        'caseNumber': _.caseNumber,
+        // 'caseNumber': _.caseNumber,
         'hidden': _.hidden,
         'callbackNeeded': _.callbackNeeded,
         'caseType': _.caseType,
@@ -138,15 +140,16 @@ server.put('/api/intake/:caseNumber', function (req, res, next) {
             'caseNumber': caseNumber
         }, // conditions
         update, // payload
-        {
+        { // options
+            upsert: true,
             new: true
-        }, // options
+        },
 
         function (err) { // callback
             if (err) {
                 res.send(err.err);
             }
-            console.log('updated intake with caseNumber of :' + caseNumber);
+            console.log('updated intake with caseNumber of : ' + caseNumber);
             res.send(200, 'updated intake with caseNumber of : ' + caseNumber);
         });
 });
@@ -155,53 +158,53 @@ server.listen(9000, function () {
     console.log('%s Listening at %s', server.name, server.url);
 });
 
-testIntakeInsert = function (n) {
-    var x = n || 1;
-
-    var _data = {
-        'taker': 'david zzzz',
-        'contributorType': 'Volunteer',
-        'caseNumber': x,
-        'hidden': true,
-        'callbackNeeded': true,
-        'caseType': 'H',
-        'caller': {
-            'first': 'david',
-            'last': 'zzzzz',
-            'email': 'user@msn.com',
-            'address': '123 wash st'
-        },
-        'callerPresentsAs': 'Familiy',
-        'callerAssessedAs': 'Friend',
-        'referedBy': 'Familiy',
-        'summaryNotes': 'lorem lorem'
-    };
-
-    return (new Intake(_data)
-        .save(function (err, savedIntake) {
-            if (err) {
-                throw err;
-            }
-            console.log('test intake001 was successful'.green);
-            console.dir(savedIntake);
-        }));
-};
-
 // http://stackoverflow.com/questions/5535610/mongoose-unique-index-not-working
-Intake.on('index', function (err) {
-    if (err) {
-        console.error(err);
-    }
-});
+// Intake.on('index', function (err) {
+// 	if (err) {
+// 		console.error(err);
+// 	}
+// });
 
-var makeOneXNumOfIntakes = (function (num) {
-    _.times(num, function (n) {
-        try {
-            console.log("creating intake..");
-            testIntakeInsert(n);
-        } catch (e) {
-            throw new Error(e);
-        }
-    });
-});
+// var testIntakeInsert = function (n) {
+// 	var x = n || 1;
+
+// 	var _data = {
+// 		'taker': 'david zzzz',
+// 		'contributorType': 'Volunteer',
+// 		'caseNumber': x,
+// 		'hidden': true,
+// 		'callbackNeeded': true,
+// 		'caseType': 'H',
+// 		'caller': {
+// 			'first': 'david',
+// 			'last': 'zzzzz',
+// 			'email': 'user@msn.com',
+// 			'address': '123 wash st'
+// 		},
+// 		'callerPresentsAs': 'Familiy',
+// 		'callerAssessedAs': 'Friend',
+// 		'referedBy': 'Familiy',
+// 		'summaryNotes': 'lorem lorem'
+// 	};
+
+// 	return (new Intake(_data)
+// 		.save(function (err, savedIntake) {
+// 			if (err) {
+// 				throw err;
+// 			}
+// 			console.log('test intake001 was successful'.green);
+// 			console.dir(savedIntake);
+// 		}));
+// };
+
+// var makeOneXNumOfIntakes = (function (num) {
+// 	_.times(num, function (n) {
+// 		try {
+// 			console.log("creating intake..");
+// 			testIntakeInsert(n);
+// 		} catch (e) {
+// 			throw new Error(e);
+// 		}
+// 	});
+// });
 // })(100);

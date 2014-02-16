@@ -23,6 +23,12 @@ h3 {
   line-height: 1;
   letter-spacing: -1px;
 }
+.fa-stack {
+  color: #4a4d4e;
+}
+nav .mainNav {
+  margin-top: -10px;
+}
 nav .mainNav ul li {
   padding: 15px;
   color: #ccc;
@@ -40,21 +46,17 @@ a.navbar-brand {
   border-color: #4a4d4e;
   background: #4a4d4e;
 }
-.jumpToCaseNumbe {
-  padding: 1em;
-  left: 15%;
-  color: #ffffff;
-  margin-top: -10px;
+.jumpToCaseNumber {
   margin-left: 5px;
 }
-.jumpToCaseNumbe input.topcoat-search-input--large {
+.jumpToCaseNumber input.topcoat-search-input--large {
   border-radius: 4px;
   background-image: none;
 }
-.jumpToCaseNumbe label {
+.jumpToCaseNumber label {
   margin-top: 10px;
 }
-.animate-switch-container {
+ng-animate .animate-switch-container {
   position: relative;
   background: white;
   border: 1px solid black;
@@ -81,7 +83,7 @@ a.navbar-brand {
 .animate-switch.ng-enter.ng-enter-active {
   top: 0;
 }
-.title {
+checkboxes .title {
   letter-spacing: -0.065em;
 }
 .spacer {
@@ -163,4 +165,7 @@ input[type=checkbox] {
   opacity: 0.3;
   cursor: default;
   pointer-events: none;
+}
+.topcoat-textarea {
+  margin-bottom: 20px;
 }

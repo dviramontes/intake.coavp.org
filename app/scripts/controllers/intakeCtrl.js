@@ -2,13 +2,13 @@
 
 /**
 
-    TODO:
-    [ ] - refactor intake model
-    [ ] - specify terms used definitions in separate doc, ie
+	TODO:
+	[ ] - refactor intake model
+	[ ] - specify terms used definitions in separate doc, ie
 
-            Define TAKER : taker is a
-            volunteer | staff | persons
-            filling out intake.
+	TAKER : taker is a
+	volunteer | staff | persons
+	filling out intake.
 **/
 
 // var init = function () {
@@ -22,28 +22,30 @@ angular.module('IntakeApp')
 
         // load the page with intakes
         $scope.formData = {};
-        $scope.caseNumber = 0;
-        $scope.callerTypes = ['Family', 'Friends', 'Romantic', 'Offender', 'Service Provider', 'Organization Survivor/Victim', 'Survivor/Victim', 'Witness', 'Other'];
+        $scope.formData.caseNumber = 1;
+        $scope.callerTypes = ['Family', 'Friends', 'Lover/Partner', 'Offender', 'Service Provider', 'Organization Survivor/Victim', 'Survivor/Victim', 'Witness', 'Other'];
         $scope.assessTypes = $scope.callerTypes;
-        $scope.violenceCategories = ['H', 'I', 'O','P','S','Z'];
+        $scope.violenceCategories = ['H', 'I', 'O', 'P', 'S', 'Z'];
 
         $scope.jumpToCaseNumber = function (val) {
-            $scope.caseNumber = val;
+            console.log('caseNumber:: ' + val);
+            $scope.formData.caseNumber = val;
         };
 
         $scope.callbackNeeded = function (val) {
+            // console.log(val);
             $scope.formData.callbackNeeded = val;
         };
 
-        $http.get(restEndPoint + 'intakes')
-            .success(function (data) {
-                $scope.intakes = data;
-                // init();
-                // console.log(data);
-            })
-            .error(function (data) {
-                console.log('Error: ' + data);
-            });
+        $scope.fetchData = function () {
+            console.log('fetching data..');
+            $http.get(restEndPoint + 'intakes')
+                .success(function (data) {
+                    $scope.intakes = data;
+                    // init();
+                    console.log(data);
+                }).error(errMessage);
+        };
 
 
         // submit the add form, send the
@@ -56,30 +58,36 @@ angular.module('IntakeApp')
                     // update the intakes on the view
                     $scope.intakes = data;
                     console.info('Created obj in DB');
-                })
-                .error(function (data) {
-                    console.log('Error: ' + data);
-                });
+                }).error(errMessage);
         };
 
         // delete intake after checking box
-        $scope.deleteIntake = function (id) {
-            $http.delete(restEndPoint + 'intake/' + id)
+        $scope.deleteIntake = function (caseNumber) {
+            $http.delete(restEndPoint + 'intake/' + caseNumber)
                 .success(function (data) {
-                    console.info('Deleted obj with id of : ' + id + ' from DB');
+                    console.info('Deleted obj with id of : ' + caseNumber + ' from DB');
                     console.log(data);
                     $scope.intakes = data;
 
-                })
-                .error(function (data) {
-                    console.error('Error: ' + data);
-                });
+                }).error(errMessage);
         };
 
-        // $scope.awesomeThings = [
-        //     'HTML5 Boilerplate',
-        //     'AngularJS',
-        //     'Karma'
-        // ];
+        $scope.updateIntake = function (caseNumber) {
+            console.log('attemp to update with caseNumber:' + caseNumber);
+            console.log(typeof caseNumber);
+            $http.put(restEndPoint + 'intake/' + caseNumber, $scope.formData)
+                .success(function (data) {
+                    console.info('Updated obj with caseNumber of : ' + caseNumber + ' from DB');
+                    console.log(data);
+                    $scope.intakes = data;
+                }).error(errMessage);
+
+        };
+
+        var errMessage = function (err, type) {
+            console.error('Error:: ' + type);
+            console.warn('Code:: ' + err.code);
+            console.dir('Message:: ' + err.message);
+        };
 
     });
