@@ -1,18 +1,22 @@
 <div class="jumbotron">
     <h1>COLORADO ANTI-VIOLENCE PROGRAM</h1>
     <br>
-    <span class="">User login / sign-up</span>
+    <span class="container">User login / sign-up</span>
     <div class="input-group">
         <label for="username" class="input-group-addon">
             @</label>
-        <input type="text" class="form-control" placeholder="Username">
+        <input type="text" class="form-control" placeholder="Username" ng-model="formData.user">
     </div>
     <div class="input-group">
         <span class="input-group-addon">**</span>
-        <input type="text" class="form-control col-sm-12 col-xs-12" placeholder="Password">
+        <input type="password" class="form-control col-sm-12 col-xs-12" placeholder="Password" ng-model="formData.password">
         <span class="input-group-btn">
-            <button class="btn btn-default" type="button">login</button>
+            <button class="btn btn-default" type="button" ng-click="login()">login</button>
             <button class="btn btn-default" type="button">Sign up</button>
         </span>
+    </div>
+    <div>
+        <pre>{{formData.user}}</pre>
+        <pre>{{formData.password}}</pre>
     </div>
 </div>

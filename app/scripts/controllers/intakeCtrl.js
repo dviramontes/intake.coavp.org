@@ -6,9 +6,6 @@
 	[ ] - refactor intake model
 	[ ] - specify terms used definitions in separate doc, ie
 
-	TAKER : taker is a
-	volunteer | staff | persons
-	filling out intake.
 **/
 
 // var init = function () {
@@ -73,13 +70,14 @@ angular.module('IntakeApp')
         };
 
         $scope.updateIntake = function (caseNumber) {
+            console.log($scope.formData);
             console.log('attemp to update with caseNumber:' + caseNumber);
-            console.log(typeof caseNumber);
+            // console.log(typeof caseNumber);
             $http.put(restEndPoint + 'intake/' + caseNumber, $scope.formData)
                 .success(function (data) {
                     console.info('Updated obj with caseNumber of : ' + caseNumber + ' from DB');
-                    console.log(data);
-                    $scope.intakes = data;
+                    console.dir(data);
+                    // $scope.intakes = data;
                 }).error(errMessage);
 
         };

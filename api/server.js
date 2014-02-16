@@ -15,13 +15,18 @@
 var restify = require('restify'),
     colors = require('colors'),
     mongoose = require('mongoose'),
-    _ = require('lodash'),
-    Intake,
-    testIntakeInsert;
+    // _ = require('lodash'),
+    passport = require('passport'),
+    LocalStrategy = require('passport-local').Strategy,
+    Intake, UserProfile;
+// testIntakeInsert;
+
 
 mongoose.connect('mongodb://127.0.0.1:27017/intakes');
 var db = mongoose.connection;
+// load schemas
 Intake = require('../models/Intake').Intake;
+UserProfile = require('../models/UserProfile').UserProfile;
 // call to disconnect ,,,
 // mongoose.disconnect();
 
@@ -40,7 +45,32 @@ var server = restify.createServer({
 server
     .use(restify.fullResponse())
     .use(restify.bodyParser())
-    .use(restify.CORS()); // Access-Control-Allow-Origin
+// initialize passport
+.use(passport.initialize())
+// Access-Control-Allow-Origin
+.use(restify.CORS());
+
+
+passport.use(new LocalStrategy(
+    function (username, password, done) {
+        UserProfile.findOne({
+            local: {
+                username: username
+            }
+        }, function (err, user) {
+            if (err) {
+                return done(err);
+            }
+            if (!user) {
+                return done(null, false);
+            }
+            if (!user.verifyPassword(password)) {
+                return done(null, false);
+            }
+            return done(null, user);
+        });
+    }
+));
 
 //  GET plural
 //  curl -i http://0.0.0.0:9000/user |  json
@@ -133,6 +163,7 @@ server.put('/api/intake/:caseNumber', function (req, res, next) {
             'address': _caller.address,
         },
         'callerPresentsAs': _.callerPresentsAs,
+        'callerAssessedAs': _.callerAssessedAs,
         'referedBy': _.referedBy
     };
 
@@ -152,6 +183,16 @@ server.put('/api/intake/:caseNumber', function (req, res, next) {
             console.log('updated intake with caseNumber of : ' + caseNumber);
             res.send(200, 'updated intake with caseNumber of : ' + caseNumber);
         });
+});
+
+server.post('/login', passport.authenticate('local', {
+    // successRedirect  : '/#/intake',
+    // failureRedirect : '/login/local',
+    // failureFlash : true
+    session: false
+}), function (req, res) {
+    // res.redirect('/intake/' + req.user.username);
+    res.redirect('/intake');
 });
 
 server.listen(9000, function () {
@@ -208,3 +249,19 @@ server.listen(9000, function () {
 // 	});
 // });
 // })(100);
+
+var makeTestUser = (function () {
+    return new UserProfile({
+        'local': {
+            'email': 'me@me.com',
+            'password': 'password'
+        }
+    }).save(function (err, savedUser) {
+        if (err) {
+            throw err;
+        }
+        console.log('user was created'.green);
+        console.dir(savedUser);
+    });
+});
+// })();

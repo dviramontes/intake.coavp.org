@@ -29,6 +29,9 @@ h3 {
 nav .mainNav {
   margin-top: -10px;
 }
+nav .mainNav button.topcoat-button--large {
+  background: #eeeeee;
+}
 nav .mainNav ul li {
   padding: 15px;
   color: #ccc;

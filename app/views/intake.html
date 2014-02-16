@@ -114,7 +114,7 @@
             <!-- presented as -->
             <div class="input-group  panel-success">
                 <span class="input-group-addon">Caller Presented As</span>
-                <select ng-model="formData.caller.callerPresentsAs" ng-options="type for type in callerTypes"></select>
+                <select ng-model="formData.callerPresentsAs" ng-options="type for type in callerTypes"></select>
                 <div ng-switch on="callerPresentedAs" class="animate-switch-container">
                     <div class="animate-switch" ng-switch-when="Family">Family</div>
                     <div class="animate-switch" ng-switch-when="Friends">Friends</div>
@@ -130,7 +130,7 @@
             <!-- assessed as -->
             <div class="input-group  panel-success">
                 <span class="input-group-addon">Caller Assessed As</span>
-                <select ng-model="formData.caller.callerAssessedAs" ng-options="type for type in assessTypes"></select>
+                <select ng-model="formData.callerAssessedAs" ng-options="type for type in assessTypes"></select>
                 <div ng-switch on="callerAssessedAs" class="animate-switch-container">
                     <div class="animate-switch" ng-switch-when="Family">Family</div>
                     <div class="animate-switch" ng-switch-when="Friends">Friends</div>
