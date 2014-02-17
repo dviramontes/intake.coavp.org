@@ -1,12 +1,12 @@
 /*====================================
 
-		TODO:
-		[X] - refactor taker /  user
-		[X] - setup get one by $index
-		[   ] - refactor all that requires a radio input selection
-		[   ] - replace date with objectid timestamp iso created time
-		[X] - drop caseNumber index multiples
-		[   ] - handle err for duplicate caseNumber
+	TODO:
+	[X] - refactor taker /  user
+	[X] - setup get one by $index
+	[   ] - refactor all that requires a radio input selection
+	[   ] - replace date with objectid timestamp iso created time
+	[X] - drop caseNumber index multiples
+	[   ] - handle err for duplicate caseNumber
 
 ====================================*/
 
@@ -84,8 +84,7 @@ var IntakeSchema = new Schema({
 // this scheme object is a simple abstraction that describes
 // how the model looks like and how it behaves
 
-var Intake = mongoose.model('Intake', IntakeSchema);
-exports.Intake = Intake;
+module.exports = mongoose.model('Intake', IntakeSchema);
 
 // 1 means ascending order..
 // inspect index with

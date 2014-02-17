@@ -3,11 +3,19 @@
 angular.module('IntakeApp')
     .controller('loginCtrl', function ($scope, $http) {
 
-        var restEndPoint = 'http://0.0.0.0:9000/login';
+        var restEndPoint = 'http://0.0.0.0:9000/';
+        
         $scope.formData = {};
 
         $scope.login = function () {
-            $http.post(restEndPoint, $scope.formData)
+            $http.post(restEndPoint + 'login', $scope.formData)
+                .success(function (data) {
+                    console.log(data);
+                }).error(errMessage);
+        };      
+
+        $scope.register = function () {
+            $http.post(restEndPoint + 'register', $scope.formData)
                 .success(function (data) {
                     console.log(data);
                 }).error(errMessage);
