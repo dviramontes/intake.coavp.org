@@ -19,11 +19,15 @@ var restify = require('restify'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     Intake, UserProfile, User,
-    appURL = "http://0.0.0.0:9005/#/";
+    appURL = 'http://0.0.0.0:9005/#/';
 // testIntakeInsert;
 
 
 mongoose.connect('mongodb://127.0.0.1:27017/intakes');
+mongoose.connection.on('error', function(err){
+	console.log('Error :: failed to connect to database '.red + err);
+});
+
 var db = mongoose.connection;
 
 // load Models
@@ -41,7 +45,7 @@ passport.deserializeUser(User.deserializeUser());
 // call to disconnect DB
 // mongoose.disconnect();
 
-db.on('error', console.error.bind(console, 'connection error:'));
+// db.on('error', console.error.bind(console, 'connection error:'));
 console.log('connection success'.green);
 
 db.on('open', function callback() {
@@ -56,19 +60,17 @@ var server = restify.createServer({
 server
     .use(restify.fullResponse())
     .use(restify.bodyParser())
-// initialize passport
-.use(passport.initialize())
-// Access-Control-Allow-Origin
-.use(restify.CORS());
+    .use(passport.initialize()) // initialize passport
+	.use(restify.CORS()); // Access-Control-Allow-Origin
 
 
 passport.use(new LocalStrategy(
-    function(username, password, done) {
+    function (username, password, done) {
         UserProfile.findOne({
             local: {
                 username: username
             }
-        }, function(err, user) {
+        }, function (err, user) {
             if (err) {
                 return done(err);
             }
@@ -85,8 +87,8 @@ passport.use(new LocalStrategy(
 
 //  GET plural
 //  curl -i http://0.0.0.0:9000/user |  json
-server.get('/api/intakes', function(req, res) {
-    Intake.find({}, function(err, foundIntakes) {
+server.get('/api/intakes', function (req, res) {
+    Intake.find({}, function (err, foundIntakes) {
         if (err) { // error ?
             res.send(err);
         }
@@ -95,10 +97,10 @@ server.get('/api/intakes', function(req, res) {
 });
 
 // GET single
-server.get('/api/intake/:caseNumber', function(req, res, next) {
+server.get('/api/intake/:caseNumber', function (req, res, next) {
     Intake.findOne({
         caseNumber: req.params.caseNumber
-    }, function(err, gotIntake) {
+    }, function (err, gotIntake) {
         if (err) {
             return next(new restify.InvalidArgumentError(
                 JSON.stringify(err.errors)));
@@ -112,7 +114,7 @@ server.get('/api/intake/:caseNumber', function(req, res, next) {
 });
 
 // POST single
-server.post('/api/intake', function(req, res, next) {
+server.post('/api/intake', function (req, res, next) {
     console.log(req.params);
     if (req.params.caller.first === undefined) {
         console.log('name is undefined yo');
@@ -121,7 +123,7 @@ server.post('/api/intake', function(req, res, next) {
     }
 
     return (new Intake(req.params)
-        .save(function(err, savedIntake) {
+        .save(function (err, savedIntake) {
             if (err) {
                 console.warn('duplicate caseNumber, skipping post');
                 console.dir(err);
@@ -133,10 +135,10 @@ server.post('/api/intake', function(req, res, next) {
 });
 
 // DELETE single
-server.del('/api/intake/:caseNumber', function(req, res, next) {
+server.del('/api/intake/:caseNumber', function (req, res, next) {
     Intake.remove({
         caseNumber: req.params.caseNumber
-    }, function(err, deletedIntake) {
+    }, function (err, deletedIntake) {
         if (err) {
             return next(
                 new restify.InvalidArgumentError(JSON.stringify(err.errors))
@@ -147,7 +149,7 @@ server.del('/api/intake/:caseNumber', function(req, res, next) {
 });
 
 // UPDATE single
-server.put('/api/intake/:caseNumber', function(req, res, next) {
+server.put('/api/intake/:caseNumber', function (req, res, next) {
     console.log('printing req.params'.red);
     console.dir(req.params);
     var caseNumber = req.params.caseNumber || undefined;
@@ -187,7 +189,7 @@ server.put('/api/intake/:caseNumber', function(req, res, next) {
             new: true
         },
 
-        function(err) { // callback
+        function (err) { // callback
             if (err) {
                 res.send(err.err);
             }
@@ -196,31 +198,36 @@ server.put('/api/intake/:caseNumber', function(req, res, next) {
         });
 });
 
-server.post('/login', passport.authenticate('local'), function(req, res) {
+server.post('/login', passport.authenticate('local'), function (req, res) {
     res.send(302, 'successfully logged in', {
-        "Location": appURL + 'intake'
+        'Location': appURL + 'intake'
     });
-    // or 
+    // or
     // res.header({Location : /redirect});
     // res.send(302, "message");
 });
 
-server.post('/register', function(req, res, next) {
+server.post('/register', function (req, res, next) {
     console.log(req.params);
     User.register(new User({
         'username': req.params.username
-    }), req.params.password, function(err, registeredUser) {
+    }), req.params.password, function (err, registeredUser) {
         if (err) {
             return next(new restify.InvalidArgumentError(JSON.stringify(err.errors)));
         }
         console.log(registeredUser);
         res.send(302, 'successfully register', {
-            "Location": appURL + 'intake'
+            'Location': appURL + 'intake'
         });
     });
 });
 
-server.listen(9000, function() {
+// static server
+// server.get(/\/#\/?.*/, restify.serveStatic({
+//     directory: '../app'
+// }));
+
+server.listen(9000, function () {
     console.log('%s Listening at %s', server.name, server.url);
 });
 

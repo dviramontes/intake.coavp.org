@@ -3,182 +3,208 @@
  @theme2 : #eee;
  @white: white;
  body {
-        // background: #fafafa;
-        background: @theme;
-        // background: url('../img/zwartevilt/zwartevilt_2.png') 0 0 repeat;
-        font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
-        color: @theme;
+    // background: #fafafa;
+    background: @theme;
+    // background: url('../img/zwartevilt/zwartevilt_2.png') 0 0 repeat;
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: @theme;
 }
 h1, h2, h3 {
-        color: @theme;
+    color: @theme;
+}
+.login {
+        /* Desktops and laptops ----------- */
+        @media only screen 
+        and (min-width : 1224px) {
+                padding: 200px 30px 200px 30px ;
+        }
+    h2 {
+        // text-decoration: underline;
+        border-bottom: 0.251em solid @theme;
+        /* Landscape */
+         @media only screen 
+        and (min-width : 1224px) {
+                border-bottom: none;
+        }
+
+    }
+}
+.actionBtn {
+    padding:1em;
+    background: @theme;
+    color:@theme2;
+    size: 2em;
+}
+.container .jumbotron {
+    border-radius: 0 0 16px 16px;
 }
 .hero-unit {
-        margin: 50px auto 0 auto;
-        width: 300px;
-        font-size: 18px;
-        font-weight: 200;
-        line-height: 30px;
-        background-color: #eee;
-        border-radius: 6px;
-        padding: 60px;
+    margin: 50px auto 0 auto;
+    width: 300px;
+    font-size: 18px;
+    font-weight: 200;
+    line-height: 30px;
+    background-color: #eee;
+    border-radius: 6px;
+    padding: 60px;
 }
 .hero-unit h1 {
-        font-size: 60px;
-        line-height: 1;
-        letter-spacing: -1px;
+    font-size: 60px;
+    line-height: 1;
+    letter-spacing: -1px;
 }
 .fa-stack {
-        color: @theme ;
-        // border-color:  #ccc;
+    color: @theme;
+    // border-color: #ccc;
 }
 nav .mainNav > {
-        margin-top: -10px;
-        margin-top: -10px;
-        button.topcoat-button--large{
-                background: @theme2;
-        }
+    margin-top: -10px;
+    margin-top: -10px;
+    button.topcoat-button--large {
+        background: @theme2;
+    }
 }
 nav .mainNav ul li {
-        padding: 15px;
-        color: #ccc;
+    padding: 15px;
+    color: #ccc;
 }
 a.navbar-brand {
-        color:@theme2;
+    color:@theme2;
 }
 .navbar-inverse .navbar-brand {
-        margin-top: 5px;
-        color:@theme2;
-        // font-size:
+    margin-top: 5px;
+    color:@theme2;
+    // font-size:
 }
 .navbar-inverse, .navbar-collapse {
-        margin-top: 5px;
-        border-color: @theme;
-        background: @theme;
+    margin-top: 5px;
+    border-color: @theme;
+    background: @theme;
 }
 .jumpToCaseNumber {
-        // padding: 1em;
-        // left: 5%;
-        // color:@white;
-        // margin-top: -10px;
-        margin-left: 5px;
-        input.topcoat-search-input--large {
-                border-radius: 4px;
-                // width: 20%;
-                // background-position: right 7px bottom 15px;
-                background-image:none;
-        }
-        label {
-                margin-top: 10px;
-        }
+    // padding: 1em;
+    // left: 5%;
+    // color:@white;
+    // margin-top: -10px;
+    margin-left: 5px;
+    input.topcoat-search-input--large {
+        border-radius: 4px;
+        // width: 20%;
+        // background-position: right 7px bottom 15px;
+        background-image:none;
+    }
+    label {
+        margin-top: 10px;
+    }
 }
 ng-animate .animate-switch-container {
-        position:relative;
-        background:white;
-        border:1px solid black;
-        height:40px;
-        overflow:hidden;
+    position:relative;
+    background:white;
+    border:1px solid black;
+    height:40px;
+    overflow:hidden;
 }
 .animate-switch {
-        padding:10px;
+    padding:10px;
 }
 .animate-switch.ng-animate {
-        -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-        transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-        position:absolute;
-        top:0;
-        left:0;
-        right:0;
-        bottom:0;
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
 }
 .animate-switch.ng-leave.ng-leave-active, .animate-switch.ng-enter {
-        top:-50px;
+    top:-50px;
 }
 .animate-switch.ng-leave, .animate-switch.ng-enter.ng-enter-active {
-        top:0;
+    top:0;
 }
 checkboxes .title {
-        letter-spacing: -.065em
+    letter-spacing: -.065em
 }
 .spacer {
-        padding: 25px 0;
+    padding: 25px 0;
 }
 input[type=checkbox] {
-        border: 0;
-        clip: rect(0 0 0 0);
-        height: 2rem;
-        margin: 0 -2rem -2rem 0;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 2rem;
-        opacity: 0.001;
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 2rem;
+    margin: 0 -2rem -2rem 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 2rem;
+    opacity: 0.001;
 }
 .topcoat-checkbox {
-        position: relative;
-        display: inline-block;
-        line-height: 2rem;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
+    position: relative;
+    display: inline-block;
+    line-height: 2rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .topcoat-checkbox__checkmark {
-        display: inline-block;
-        vertical-align: top;
-        width: 2rem;
-        height: 2rem;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
+    display: inline-block;
+    vertical-align: top;
+    width: 2rem;
+    height: 2rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 /* Background */
  .topcoat-checkbox__checkmark:before {
-        content:'';
-        position: absolute;
-        box-sizing: border-box;
-        width: 2rem;
-        height: 2rem;
-        background: #e5e9e9;
-        border: 1px solid #a5a8a8;
-        border-radius: 3px;
-        cursor: pointer;
-        -webkit-box-shadow: inset 0 1px #fff;
-        box-shadow: inset 0 1px #fff;
+    content:'';
+    position: absolute;
+    box-sizing: border-box;
+    width: 2rem;
+    height: 2rem;
+    background: #e5e9e9;
+    border: 1px solid #a5a8a8;
+    border-radius: 3px;
+    cursor: pointer;
+    -webkit-box-shadow: inset 0 1px #fff;
+    box-shadow: inset 0 1px #fff;
 }
 /* Checkmark */
  .topcoat-checkbox__checkmark:after {
-        opacity: 0;
-        content:'';
-        position: absolute;
-        /* Length of check tail */
-        width: 28px;
-        /* Lenght of check foot */
-        height: 11px;
-        background: transparent;
-        border: 7px solid #666666;
-        border-top: none;
-        border-right: none;
-        border-radius: 2px;
-        -webkit-transform: rotate(-50deg);
-        -moz-transform: rotate(-50deg);
-        -o-transform: rotate(-50deg);
-        -ms-transform: rotate(-50deg);
-        transform: rotate(-50deg);
+    opacity: 0;
+    content:'';
+    position: absolute;
+    /* Length of check tail */
+    width: 28px;
+    /* Lenght of check foot */
+    height: 11px;
+    background: transparent;
+    border: 7px solid #666666;
+    border-top: none;
+    border-right: none;
+    border-radius: 2px;
+    -webkit-transform: rotate(-50deg);
+    -moz-transform: rotate(-50deg);
+    -o-transform: rotate(-50deg);
+    -ms-transform: rotate(-50deg);
+    transform: rotate(-50deg);
 }
 :checked + .topcoat-checkbox__checkmark:after {
-        opacity: 1;
+    opacity: 1;
 }
 :focus + .topcoat-checkbox__checkmark:before {
-        border: 1px solid #0940fd;
-        -webkit-box-shadow: 0 0 0 2px #6fb5f1;
-        box-shadow: 0 0 0 2px #6fb5f1;
+    border: 1px solid #0940fd;
+    -webkit-box-shadow: 0 0 0 2px #6fb5f1;
+    box-shadow: 0 0 0 2px #6fb5f1;
 }
 :disabled + .topcoat-checkbox__checkmark:before {
-        opacity: 0.3;
-        cursor: default;
-        pointer-events: none;
+    opacity: 0.3;
+    cursor: default;
+    pointer-events: none;
 }
 .topcoat-textarea {
-        margin-bottom: 20px;
+    margin-bottom: 20px;
 }

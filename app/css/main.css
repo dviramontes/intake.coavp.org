@@ -8,6 +8,32 @@ h2,
 h3 {
   color: #4a4d4e;
 }
+.login {
+  /* Desktops and laptops ----------- */
+}
+@media only screen and (min-width: 1224px) {
+  .login {
+    padding: 200px 30px 200px 30px ;
+  }
+}
+.login h2 {
+  border-bottom: 0.251em solid #4a4d4e;
+  /* Landscape */
+}
+@media only screen and (min-width: 1224px) {
+  .login h2 {
+    border-bottom: none;
+  }
+}
+.actionBtn {
+  padding: 1em;
+  background: #4a4d4e;
+  color: #eeeeee;
+  size: 2em;
+}
+.container .jumbotron {
+  border-radius: 0 0 16px 16px;
+}
 .hero-unit {
   margin: 50px auto 0 auto;
   width: 300px;

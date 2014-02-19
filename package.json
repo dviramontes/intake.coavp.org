@@ -3,8 +3,7 @@
         "node": ">= 0.10.0"
     },
     "scripts": {
-        "start": "node api/server.js",
-        "debug": "nodemon api/server.js"
+        "start" : "nodemon api/server.js"
     },
     "devDependencies": {
         "grunt": "~0.4.2",
