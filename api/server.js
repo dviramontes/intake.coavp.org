@@ -197,20 +197,26 @@ server.put('/api/intake/:caseNumber', function(req, res, next) {
 });
 
 server.post('/login', passport.authenticate('local'), function(req, res) {
-    res.send(302, 'successfully logged in', { Location : appURL + 'intake'});
-    // or res.header({Location : /redirect});
-    //  res.send(302, "message");
+    res.send(302, 'successfully logged in', {
+        "Location": appURL + 'intake'
+    });
+    // or 
+    // res.header({Location : /redirect});
+    // res.send(302, "message");
 });
 
 server.post('/register', function(req, res, next) {
+    console.log(req.params);
     User.register(new User({
-        username: req.params.username
+        'username': req.params.username
     }), req.params.password, function(err, registeredUser) {
         if (err) {
             return next(new restify.InvalidArgumentError(JSON.stringify(err.errors)));
         }
         console.log(registeredUser);
-        res.send(302, 'successfully register', { Location : appURL + 'intake'});
+        res.send(302, 'successfully register', {
+            "Location": appURL + 'intake'
+        });
     });
 });
 

@@ -5,7 +5,7 @@ angular.module('IntakeApp')
 
         var restEndPoint = 'http://0.0.0.0:9000/';
         
-        $scope.formData = {};
+        // $scope.formData = {};
 
         $scope.login = function () {
             $http.post(restEndPoint + 'login', $scope.formData)
