@@ -29,7 +29,9 @@ module.exports = function (grunt) {
     // Load per-task config from separate files.
     grunt.loadTasks('tasks');
     // register the server task with watcher
-    grunt.registerTask('server', ['connect:server', 'watch']);
+    // grunt.registerTask('server', ['connect:server', 'watch']);
+    // grunt.registerTask('server', ['watch']);
+    // use grunt watch for livereload
     // Default task.
     grunt.registerTask('default', ['server']);
 
