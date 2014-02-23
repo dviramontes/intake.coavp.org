@@ -1,19 +1,19 @@
 /*====================================
 
-  TODO:
-  [X]  -  delete route
-  [X]  -  get / single  by caseNumber
-  [X]  -  post / single
-  [X]  -  put / update / single route
-  [ ]  -  validate post / single payload
-  [ ]  -  use hapi
+	TODO:
+	[X]  -  delete route
+	[X]  -  get / single  by caseNumber
+	[X]  -  post / single
+	[X]  -  put / update / single route
+	[ ]  -  validate post / single payload
+	[ ]  -  use hapi
 
 ====================================*/
 
 'use strict';
 
 var restify = require('restify'),
-  colors = require('colors'),
+  chalk = require('chalk'),
   mongoose = require('mongoose'),
   // _ = require('lodash'),
   passport = require('passport'),
@@ -25,7 +25,7 @@ var restify = require('restify'),
 
 mongoose.connect('mongodb://127.0.0.1:27017/intakes');
 mongoose.connection.on('error', function (err) {
-  console.log('Error :: failed to connect to database '.red + err);
+  console.log(chalk.red('Error :: failed to connect to database ') + err);
 });
 
 var db = mongoose.connection;
@@ -46,11 +46,11 @@ passport.deserializeUser(User.deserializeUser());
 // mongoose.disconnect();
 
 // db.on('error', console.error.bind(console, 'connection error:'));
-console.log('connection success'.green);
+console.log(chalk.yellow('connection success'));
 
 db.on('open', function callback() {
   // testIntakeInsert();
-  console.log('database opened'.green);
+  console.log(chalk.blue('database opened'));
 });
 
 var server = restify.createServer({
@@ -185,24 +185,24 @@ server.put('/api/intake/:caseNumber', function (req, res, next) {
 });
 
 server.post('/login', passport.authenticate('local', {
- // successRedirect : '/profile',
- // failureRedirect : '/connect/local',
+  // successRedirect: '/',
+  // failureRedirect: '/login'
 }), function (req, res, next) {
-  res.send(302, 'successfully logged in', {
-    'Location': 'http://0.0.0.0:9000/#/intake'
-  });
-  // or
+  // res.send(302, 'successfully logged in', {
+  // 	'Location': 'http://0.0.0.0:9000/#/intake'
+  // });
+  // // or
   // console.log('user authenticated successfully');
-  res.header({
-    'Location': appURL + '/intake'
-  });
-  res.send(302, "message");
-  return next();
+  // res.header({
+  //   'Location': appURL + '/intake'
+  // });
+  res.send(302, "ok cool.. ");
+  // return next();
   // return next(false);
 });
 
 server.post('/register', function (req, res, next) {
-  console.log("attempting to register user:");
+  console.log(chalk.blue("attempting to register user:"));
   console.dir(req.params);
   User.register(new User({
     username: req.params.username
@@ -233,7 +233,7 @@ server.get(/^\/.*$/, require('restify').serveStatic({
 
 
 server.listen(9000, function () {
-  console.log('%s Listening at %s', server.name, server.url);
+  console.log(chalk.cyan(server.name , 'Listening',   server.url));
 });
 
 // http://stackoverflow.com/questions/5535610/mongoose-unique-index-not-working
