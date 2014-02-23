@@ -9,12 +9,7 @@ h3 {
   color: #4a4d4e;
 }
 .login {
-  /* Desktops and laptops ----------- */
-}
-@media only screen and (min-width: 1224px) {
-  .login {
-    padding: 200px 30px 200px 30px ;
-  }
+  padding: 200px 30px 200px 30px ;
 }
 .login h2 {
   border-bottom: 0.251em solid #4a4d4e;

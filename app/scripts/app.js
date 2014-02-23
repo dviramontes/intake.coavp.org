@@ -5,13 +5,13 @@
             // if the path doesn't match any of the urls you configured
             // otherwise will take care of routing the user to the specified url
             $stateProvider
-                .state('home', {
+                .state('login', {
                     url: '/login',
                     templateUrl: 'views/login.html',
                     controller: 'loginCtrl'
                 })
                 .state('intake', {
-                    url: '/intake',
+                    url: '/',
                     templateUrl: 'views/intake.html',
                     controller: 'intakeCtrl'
                 });
