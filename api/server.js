@@ -1,18 +1,21 @@
 /*====================================
 
-	TODO:
-	[X]  -  delete route
-	[X]  -  get / single  by caseNumber
-	[X]  -  post / single
-	[X]  -  put / update / single route
-	[ ]  -  validate post / single payload
-	[ ]  -  use hapi
+    TODO:
+    [X]  -  delete route
+    [X]  -  get / single  by caseNumber
+    [X]  -  post / single
+    [X]  -  put / update / single route
+    [ ]  -  validate post / single payload
+    [ ]  -  use hapi
 
 ====================================*/
 
 'use strict';
 
-var restify = require('restify'),
+var express = require('express'),
+  http = require('http'),
+  path = require('path'),
+  flash = require('connect-flash'),
   chalk = require('chalk'),
   mongoose = require('mongoose'),
   // _ = require('lodash'),
@@ -25,15 +28,16 @@ var restify = require('restify'),
 
 mongoose.connect('mongodb://127.0.0.1:27017/intakes');
 mongoose.connection.on('error', function (err) {
-  console.log(chalk.red('Error :: failed to connect to database ') + err);
+  console.log(
+    chalk.red('Error :: failed to connect to database ' + err));
 });
 
 var db = mongoose.connection;
 
 // load Models
 Intake = require('../models/Intake');
-UserProfile = require('../models/UserProfile');
 User = require('../models/User');
+// UserProfile = require('../models/UserProfile');
 
 // use static authenticate method of model in LocalStrategy
 passport.use(User.createStrategy());
@@ -42,8 +46,9 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// call to disconnect DB
+// call to manual disconnect DB if needed
 // mongoose.disconnect();
+// or db.disconnect();
 
 // db.on('error', console.error.bind(console, 'connection error:'));
 console.log(chalk.yellow('connection success'));
@@ -53,27 +58,36 @@ db.on('open', function callback() {
   console.log(chalk.blue('database opened'));
 });
 
-var server = restify.createServer({
-  name: 'API'
-});
+var app = express();
 
-server
-  .use(restify.fullResponse())
-  .use(restify.bodyParser())
-  .use(passport.initialize()) // initialize passport
-.use(restify.CORS());
+app.set('port', process.env.PORT || 9000);
+// app.use(app.router);
+// app.use(express.static('app'));
+app.use(passport.initialize());
+// app.use(passport.session());
+app.use(express.favicon());
+app.use(express.logger('dev'));
+app.set('view engine', 'jade');
+app.use(express.json());
+app.use(express.urlencoded());
+app.use(express.methodOverride());
+app.use(flash());
+app.use(express.static(path.join('app')));
 
 
-// Access-Control-Allow-Origin
-// {
-// 'origins': ['http://0.0.0.0:9005', 'http://0.0.0.0:9005/#/login', 'http://0.0.0.0:9005/#/intake']
-// })
-// );
+// development only
+if ('development' == app.get('env')) {
+  app.use(express.errorHandler());
+}
 
+var errMessage = function (err, type) {
+  console.error('Error :: ' + type);
+  console.dir('Message :: ' + err.message);
+};
 
 //  GET plural
 //  curl -i http://0.0.0.0:9000/user |  json
-server.get('/api/intakes', function (req, res) {
+app.get('/api/intakes', function (req, res) {
   Intake.find({}, function (err, foundIntakes) {
     if (err) { // error ?
       res.send(err);
@@ -83,7 +97,7 @@ server.get('/api/intakes', function (req, res) {
 });
 
 // GET single
-server.get('/api/intake/:caseNumber', function (req, res, next) {
+app.get('/api/intake/:caseNumber', function (req, res, next) {
   Intake.findOne({
     caseNumber: req.params.caseNumber
   }, function (err, gotIntake) {
@@ -100,7 +114,7 @@ server.get('/api/intake/:caseNumber', function (req, res, next) {
 });
 
 // POST single
-server.post('/api/intake', function (req, res, next) {
+app.post('/api/intake', function (req, res, next) {
   console.log(req.params);
   if (req.params.caller.first === undefined) {
     console.log('name is undefined yo');
@@ -121,7 +135,7 @@ server.post('/api/intake', function (req, res, next) {
 });
 
 // DELETE single
-server.del('/api/intake/:caseNumber', function (req, res, next) {
+app.del('/api/intake/:caseNumber', function (req, res, next) {
   Intake.remove({
     caseNumber: req.params.caseNumber
   }, function (err, deletedIntake) {
@@ -135,7 +149,7 @@ server.del('/api/intake/:caseNumber', function (req, res, next) {
 });
 
 // UPDATE single
-server.put('/api/intake/:caseNumber', function (req, res, next) {
+app.put('/api/intake/:caseNumber', function (req, res, next) {
   console.log('printing req.params'.red);
   console.dir(req.params);
   var caseNumber = req.params.caseNumber || undefined;
@@ -184,24 +198,13 @@ server.put('/api/intake/:caseNumber', function (req, res, next) {
     });
 });
 
-server.post('/login', passport.authenticate('local', {
-  // successRedirect: '/',
-  // failureRedirect: '/login'
-}), function (req, res, next) {
-  // res.send(302, 'successfully logged in', {
-  // 	'Location': 'http://0.0.0.0:9000/#/intake'
-  // });
-  // // or
-  // console.log('user authenticated successfully');
-  // res.header({
-  //   'Location': appURL + '/intake'
-  // });
-  res.send(302, "ok cool.. ");
-  // return next();
-  // return next(false);
+app.post('/login', passport.authenticate('local'), function (req, res) {
+  // If this function gets called, authentication was successful.
+  // `req.user` contains the authenticated user.
+  res.redirect('/intake');
 });
 
-server.post('/register', function (req, res, next) {
+app.post('/register', function (req, res, next) {
   console.log(chalk.blue("attempting to register user:"));
   console.dir(req.params);
   User.register(new User({
@@ -215,25 +218,12 @@ server.post('/register', function (req, res, next) {
   });
 });
 
-var errMessage = function (err, type) {
-  console.error('Error :: ' + type);
-  console.dir('Message :: ' + err.message);
-};
+app.get('/', function(req, res){
+  res.sendfile(path.join('app') + '/index.html');
+})
 
-// static server
-// angular app entry
-// server.get(/\/#\/?.*/, restify.serveStatic({
-//     'directory': '../app',
-//     'default' : 'index.html'
-// }));
-server.get(/^\/.*$/, require('restify').serveStatic({
-  'directory': './app',
-  'default': 'index.html'
-}));
-
-
-server.listen(9000, function () {
-  console.log(chalk.cyan(server.name , 'Listening',   server.url));
+http.createServer(app).listen(app.get('port'), function () {
+  console.log('Express server listening on port ' + app.get('port'));
 });
 
 // http://stackoverflow.com/questions/5535610/mongoose-unique-index-not-working
