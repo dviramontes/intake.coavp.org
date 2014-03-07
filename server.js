@@ -23,24 +23,25 @@ var express = require('express'),
 var app = express();
 
 // load Models
-var Intake = require('./models/Intake');
+// var Intake = require('./models/Intake');
 var User = require('./models/User');
 // UserProfile = require('../models/UserProfile');
 
-var routes = require('./routes')(app);
-var api  = require('./routes/api')(app, Intake);
+// load routes
+var routes = require('./routes'); // index.js
+var api  = require('./routes/api');
 
 
 // DB
 mongoose.connect('mongodb://127.0.0.1:27017/intakes');
 mongoose.connection.on('error', function (err) {
-  console.log(
-    chalk.red('Error :: failed to connect to database ' + err));
+    console.log(chalk.red('Error :: failed to connect to database ' + err));
 });
 mongoose.connection.on('open', function callback() {
   // testIntakeInsert();
   console.log(chalk.blue('database opened'));
 });
+
 // call to manual disconnect DB if needed
 // mongoose.disconnect();
 // or db.disconnect();
@@ -54,8 +55,6 @@ passport.deserializeUser(User.deserializeUser());
 
 // db.on('error', console.error.bind(console, 'connection error:'));
 // console.log(chalk.yellow('connection success'));
-
-
 
 
 app.set('port', process.env.PORT || 9000);
@@ -82,7 +81,6 @@ var errMessage = function (err, type) {
   console.error('Error :: ' + type);
   console.dir('Message :: ' + err.message);
 };
-
 
 //  GET plural
 //  curl -i http://0.0.0.0:9000/user |  json
