@@ -1,6 +1,6 @@
     'use strict';
 
-    angular.module('IntakeApp', ['ui.router', 'ngAnimate'])
+    angular.module('IntakeApp', ['ui.router', 'textAngular'])
         .config(function ($stateProvider, $urlRouterProvider) {
             // if the path doesn't match any of the urls you configured
             // otherwise will take care of routing the user to the specified url

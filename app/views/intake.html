@@ -74,14 +74,14 @@
             </div>
         </div>
         <div class="col-md-6">
-            <!-- <textarea class="topcoat-textarea" rows="3" cols="32" placeholder="Textarea"></textarea> -->
-            <!-- <br> -->
-            <!-- <br> -->
-            <textarea class="topcoat-textarea" rows="3" cols="32" placeholder="Textarea" disabled></textarea>
-            <button class="topcoat-button--large" ng-click="updateIntake(jumpValue)">Update</button>
-            <!-- <button class="topcoat-button--large" disabled>Submit</button> -->
-            <button class="topcoat-button--large topcoat-button--large--cta" ng-click="createIntake()">Create</button>
-            <br>
+          <div>
+                  <div  text-angular ng-model="htmlVariable" class="ta-editor taTextElement" placeholder="Intake notes" ng-model="htmlVariable"></div>
+                <br> 
+                <!-- <button class="topcoat-button--large" disabled>Submit</button> -->
+                <button class="topcoat-button--large" ng-click="updateIntake(jumpValue)">Update</button> 
+                <button class="topcoat-button--large topcoat-button--large--cta" ng-click="createIntake()">Create</button>
+                <br>
+          </div>
         </div>
     </div>
 

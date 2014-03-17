@@ -4,7 +4,7 @@
 
     TODO:
     [ ] - refactor intake model
-    [ ] - specify terms used definitions in separate doc, ie
+    [ ] - specify terms used definitions in separate doc
 
 **/
 

@@ -1,3 +1,4 @@
+
 var Intake = require('../models/Intake');
 
 exports.del = function(req, res, next) {
@@ -38,14 +39,14 @@ exports.get = function(req, res, next) {
         // caseNumber: req.body.caseNumber
     }, function(err, gotIntake) {
         if (err) {
-            return next(new restify.InvalidArgumentError(
-                JSON.stringify(err.errors)));
+            res.send(JSON.stringify(err));
         }
         if (gotIntake) {
             res.send(gotIntake);
         } else {
             res.send(404);
         }
+        return next();
     });
 }
 
@@ -63,13 +64,13 @@ exports.getAll = function(req, res) {
  */
 
 exports.put = function(req, res, next) {
-    console.log(red('printing req.body'));
+    console.log('printing req.body');
     console.dir(req.body);
     var caseNumber = req.body.caseNumber || undefined;
     if (caseNumber === undefined) {
         console.log('A case number must be provided update route');
-        return next(new restify.InvalidArgumentError(
-            'A case number must be provided update route'));
+        res.send('A case number must be provided update route');
+        return next();
     }
     // aliases
     var _ = req.body;

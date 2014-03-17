@@ -1,7 +1,9 @@
 // @import"./utils/topcoat-search-input--large.less";
  @theme : #4A4D4E;
  @theme2 : #eee;
+ @theme3 : #454646;
  @white: white;
+ 
  body {
     // background: #fafafa;
     background: @theme;
@@ -30,6 +32,38 @@ h1, h2, h3 {
 
     }
 }
+
+
+// editor
+.ta-editor {
+  min-height: 300px;
+  height: auto;
+  overflow: auto;
+  font-family: inherit;
+  font-size: 100%;
+
+}
+.taTextElement{
+
+}
+
+// style for placeholder text
+::-webkit-input-placeholder {
+   color: red;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: red;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: red;  
+}
+
+:-ms-input-placeholder {  
+   color: red;  
+}
+
 .actionBtn {
     padding:1em;
     background: @theme;
